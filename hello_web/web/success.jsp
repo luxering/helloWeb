@@ -16,19 +16,23 @@
 <body>
     <div class="main">
         <p>Success!</p>
-        <p><span class="infoText">3</span>秒后返回主页...</p>
+        <p>
+            <span class="infoText">3</span><span>秒后返回主页...</span>
+        </p>
     </div>
     <script>
-        let infoTextDom = document.querySelector(".infoText");
-        let countdown = 3;
-        let timer = setInterval(function () {
-            countdown --;
-            infoTextDom.innerHTML = countdown;
-            if(countdown<=0){
-                timer = null;
-                window.location.href = "/helloweb/";
-            }
-        },1000);
+        {
+            let infoTextDom = document.querySelector(".infoText");
+            let countdown = 3;
+            let countdownTimer = setInterval(function () {
+                countdown --;
+                infoTextDom.innerHTML = countdown;
+                if(countdown<=0){
+                    countdownTimer = null;
+                    window.location.href = "/helloweb/";
+                }
+            },1000);
+        }
     </script>
 </body>
 </html>

@@ -73,7 +73,8 @@
     window.onload = function(){
         {
             let cookie = document.cookie;
-            console.log(cookie);
+            console.log("cookie at window.onload==="+cookie);
+            // console.log(logInBtnDom);
             let cookieArr = cookie.split(";");
             let username;
             for(let i=0,len=cookieArr.length;i<len;i++){
@@ -100,63 +101,50 @@
                 let logOutDom = document.querySelector("header .hr_logOut");
                 if(logOutDom)logOutDom.onclick = function () {
                     rightHeaderDom.innerHTML = defaultHtml;
+                    // if(!logInBtnDom)logInBtnDom = document.querySelector("header .hr_logInBtn");
+                    logInConfig();
                     let xhr = new XMLHttpRequest();
                     xhr.open("get","logOut",true);
                     xhr.onreadystatechange = function () {
                         if(this.readyState===4 && this.status === 200){
                             let text = this.responseText;
-                            console.log(text);
+                            console.log("response==="+text);
+                            console.log("cookie in xhr===="+document.cookie);
                             // window.location.href = text;
                             // window.location.reload();
                         }
                     }
                     xhr.send();
+                    console.log("cookie after xhr==="+document.cookie);
                     //document.cookie.
                 }
             }
         }
         let logInFormDom = document.forms[0];
         // console.log(logInFormDom);
-        let logInBtnDom = document.querySelector("header .hr_logInBtn");
+        // let logInBtnDom = document.querySelector("header .hr_logInBtn");
         let closeLogInDom = document.querySelector(".loginForm .l_close");
         let dateInfoDom = document.querySelector("header .hl_dateInfo");
         let loginSubmitBtnDom = document.querySelector(".loginForm .l_submitBtn");
         let usernameInputDom = logInFormDom.username;
         let passwordInputDom = logInFormDom.password;
         let loginTipDoms = document.querySelectorAll(".loginForm .l_inputTip");
-        if(logInBtnDom)logInBtnDom.onclick = function () {
+        /*if(logInBtnDom)logInBtnDom.onclick = function () {
             logInFormDom.style.display = "block";
             usernameInputDom.focus();
-        };
+        };*/
+        logInConfig();
+        function logInConfig() {
+            let logInBtnDom = document.querySelector("header .hr_logInBtn");
+            if(logInBtnDom)logInBtnDom.onclick = function () {
+                logInFormDom.style.display = "block";
+                usernameInputDom.focus();
+            };
+        }
         usernameInputDom.onmousedown = passwordInputDom.onmousedown = function () {
             let classList = this.nextElementSibling.classList;
             classList.remove("bad");
             classList.remove("good");
-        }
-        //登录相关的函数
-        my.$login = {};
-        /**
-         * 账号，密码验证是否为空。或是少于6 位字符。
-         * */
-        my.$login.validate = function(dom){
-            console.log(dom.name);
-            let value = dom.value
-            let name = dom.name;
-            let tipDom = dom.nextElementSibling;
-            if(!value){
-                tipDom.classList.add("bad");
-                tipDom.innerHTML = "请输入" + (name === "username" ? "用户名！":"密码！");
-                return false;
-            }else if(value.length < 6){
-                tipDom.classList.add("bad");
-                tipDom.innerHTML = (name === "username" ? "用户名":"密码") + "长度不得小于6个字符！";
-                return false;
-            }else{
-                tipDom.classList.add("good");
-                tipDom.innerHTML = "";
-                return true;
-            }
-            return false;
         }
         usernameInputDom.onblur = passwordInputDom.onblur = function () {
             my.$login.validate(this);
@@ -208,7 +196,7 @@
             return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom);
         }
         my.$date.getFullTime(dateInfoDom);
-        let timer = setInterval(function () {
+        let dateTimer = setInterval(function () {
             my.$date.getFullTime(dateInfoDom);
         },1000);
     };
@@ -233,6 +221,32 @@
         let m = minute<10?"0"+minute:minute;
         let s = second<10?"0"+second:second;
         return h + ":" + m + ":" + s;
+    }
+
+    //登录相关的函数
+    my.$login = {};
+    /**
+     * 账号，密码验证是否为空。或是少于6 位字符。
+     * */
+    my.$login.validate = function(dom){
+        console.log(dom.name);
+        let value = dom.value
+        let name = dom.name;
+        let tipDom = dom.nextElementSibling;
+        if(!value){
+            tipDom.classList.add("bad");
+            tipDom.innerHTML = "请输入" + (name === "username" ? "用户名！":"密码！");
+            return false;
+        }else if(value.length < 6){
+            tipDom.classList.add("bad");
+            tipDom.innerHTML = (name === "username" ? "用户名":"密码") + "长度不得小于6个字符！";
+            return false;
+        }else{
+            tipDom.classList.add("good");
+            tipDom.innerHTML = "";
+            return true;
+        }
+        return false;
     }
 </script>
 </body>
