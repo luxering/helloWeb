@@ -9,8 +9,26 @@
 <html>
 <head>
     <title>success!</title>
+    <style>
+        .infoText{color:#f00;padding:0 5px;}
+    </style>
 </head>
 <body>
-    <div class="info"><p>Success!</p></div>
+    <div class="main">
+        <p>Success!</p>
+        <p><span class="infoText">3</span>秒后返回主页...</p>
+    </div>
+    <script>
+        let infoTextDom = document.querySelector(".infoText");
+        let countdown = 3;
+        let timer = setInterval(function () {
+            countdown --;
+            infoTextDom.innerHTML = countdown;
+            if(countdown<=0){
+                timer = null;
+                window.location.href = "/helloweb/";
+            }
+        },1000);
+    </script>
 </body>
 </html>
