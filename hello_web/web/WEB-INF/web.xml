@@ -24,6 +24,14 @@
         <servlet-name>logoutServlet</servlet-name>
         <url-pattern>/logOut</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>userInfoPage</servlet-name>
+        <servlet-class>com.test.web.UserInfoPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userInfoPage</servlet-name>
+        <url-pattern>/user/*</url-pattern>
+    </servlet-mapping>
     <!--servlet end-->
     <!--servletContext init params start-->
     <context-param>

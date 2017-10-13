@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <link rel="icon" href="https://assets-cdn.github.com/favicon.ico">
+    <link rel="icon" href="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg">
     <meta name="keywords" content="hello web,Hello Web">
     <meta name="description" content="hello web is a web.Hello Web is a website">
     <title>Hello Web</title>
@@ -33,16 +33,21 @@
     .hr_ulbox li{height:30px;line-height:30px;}
     .hr_logOut{background:#f00;color:#fff;}
 
-    .hl_title{font-weight:400;font-size:18px;display:inline-block;}
+    .hl_title{font-weight:400;font-size:18px;display:inline-block;padding-right:10px;}
     .hl_dateInfo{padding-left:5px;font-size:10px;}
 </style>
 <header class="header">
     <div class="h_rightBox">
-
-
+        <%--<a href="user/1" class="hr_userImg"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg" alt="img" width="20" height="20">
+          </a><div class="hr_userInfo">
+              <p class="hr_username">username</p>
+              <ul class="hr_ulbox">
+                  <li class="hr_logOut" title="退出">退出</li>
+              </ul>
+         </div>--%>
     </div>
     <div class="h_leftBox">
-        <h3 class="hl_title">HelloWeb</h3><span class="hl_dateInfo">note:no:no 1:1:1</span>
+        <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="hl_title">HelloWeb</h3></a><span class="hl_dateInfo">note:no:no 1:1:1</span>
     </div>
 </header>
 <style type="text/css">
@@ -73,66 +78,73 @@
 </div>
 <%--</form>--%>
 <script type="text/javascript">
-    window.onload = function(){
+    window.onload = function () {
         {
             let cookie = document.cookie;
             console.log("cookie at window.onload===" + cookie);
             // console.log(logInBtnDom);
             let cookieArr = cookie.split(";");
-            let username;
+            let username,user_id = 0;
             for (let i = 0, len = cookieArr.length; i < len; i++) {
+                console.log("cookieArr[i]=="+cookieArr[i].trim());
                 if (cookieArr[i].indexOf("username") !== -1) {
-                    username = cookieArr[i].substring("username".length + 1);
+                    username = cookieArr[i].trim().substring("username".length + 1);
+                }else if(cookieArr[i].indexOf("user_id")!==-1){
+                    user_id = cookieArr[i].trim().substring("user_id".length + 1);
                 }
             }
             let rightHeaderDom = document.querySelector("header .h_rightBox");
+
             // return;
             function logInConfig() {
                 let defaultHtml = "<div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_logInBtn\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_signUpBtn\'>注册</a></div>";
                 rightHeaderDom.innerHTML = defaultHtml;
                 let logInBtnDom = document.querySelector("header .hr_logInBtn");
-                if(logInBtnDom)logInBtnDom.onclick = function () {
+                if (logInBtnDom) logInBtnDom.onclick = function () {
                     logInFormDom.style.display = "block";
                     usernameInputDom.focus();
                     // my.$login.clearLoginTipClass(usernameInputDom);
                 };
             }
-            function logInUserConfig(uName) {
-                rightHeaderDom.innerHTML = "<div class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
-                    "          </div><div class=\'hr_userInfo\'>\n" +
-                    "              <p class=\'hr_username\'>"+ uName +"</p>\n" +
-                    "              <ul class=\'hr_ulbox\'>\n"+
-                    "                  <li class=\'hr_logOut\'>退出</li>\n"+
-                    "              </ul>\n"+
+
+            function logInUserConfig(uName,uId) {
+                console.log("uName==="+uName);
+                rightHeaderDom.innerHTML = "<a href='user/"+uId+"' class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
+                    "          </a><div class=\'hr_userInfo\'>\n" +
+                    "              <p class=\'hr_username\'>" + uName + "</p>\n" +
+                    "              <ul class=\'hr_ulbox\'>\n" +
+                    "                  <li class=\'hr_logOut\' title=\'退出\'>退出</li>\n" +
+                    "              </ul>\n" +
                     "          </div>";
                 let userImgDom = document.querySelector("header .hr_userImg");
                 //click for test
                 if (userImgDom) userImgDom.onclick = function () {
-                    console.log(uName);
+                    console.log("uName=="+uName,"uId=="+uId);
                 }
                 let logOutDom = document.querySelector("header .hr_logOut");
-                if(logOutDom)logOutDom.onclick = function () {
+                if (logOutDom) logOutDom.onclick = function () {
                     // rightHeaderDom.innerHTML = defaultHtml;
                     // if(!logInBtnDom)logInBtnDom = document.querySelector("header .hr_logInBtn");
                     //退出，显示“登录”
                     logInConfig();
                     let xhr = new XMLHttpRequest();
-                    xhr.open("get","logOut",true);
+                    xhr.open("get", "logOut", true);
                     xhr.onreadystatechange = function () {
-                        if(this.readyState===4 && this.status === 200){
+                        if (this.readyState === 4 && this.status === 200) {
                             let text = this.responseText;
-                            console.log("response==="+text);
-                            console.log("cookie in xhr===="+document.cookie);
+                            console.log("response===" + text);
+                            console.log("cookie in xhr====" + document.cookie);
                             // window.location.href = text;
                             // window.location.reload();
                         }
                     }
                     xhr.send();
-                    console.log("cookie after xhr==="+document.cookie);
+                    console.log("cookie after xhr===" + document.cookie);
                     //document.cookie.
                 }
             }
-            if(!username){
+
+            if (!username) {
                 //显示“登录”
                 logInConfig();
                 /*function logInConfig() {
@@ -144,9 +156,9 @@
                         // my.$login.clearLoginTipClass(usernameInputDom);
                     };
                 }*/
-            }else{
+            } else {
                 //显示用户
-                logInUserConfig(username);
+                logInUserConfig(username,user_id);
                 /*rightHeaderDom.innerHTML = "<div class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
                     "          </div><div class=\'hr_userInfo\'>\n" +
                     "              <p class=\'hr_username\'>"+ username +"</p>\n" +
@@ -273,24 +285,39 @@
             // return false;
             // for(let key in document){console.log(key+"==="+document[key]);}
             // return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom);
-            if(my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom)){
+            if (my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom)) {
                 let username = usernameInputDom.value;
                 let password = passwordInputDom.value;
-                let data = "username="+username + "&password=" + password;
-                console.log("date=="+data);
+                let data = "username=" + username + "&password=" + password;
+                console.log("date==" + data);
                 let xhr = new XMLHttpRequest();
-                xhr.open("post","login",true);
-                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                xhr.open("post", "login", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.onreadystatechange = function () {
-                    if(this.readyState === 4 && this.status === 200){
+                    if (this.readyState === 4 && this.status === 200) {
                         let text = this.responseText;
-                        console.log("text=="+text);
-                        if(text === "success"){
+                        console.log("text==" + text);
+                        if(text.indexOf("fail")!==-1){
+                            console.log("fail...");
+                            passwordInputDom.value = null;
+                            let passwordTipDom = passwordInputDom.nextElementSibling;
+                            passwordTipDom.classList.remove("good");
+                            passwordTipDom.innerHTML = "账号或密码错误！";
+                            passwordTipDom.classList.add("bad");
+                        }else {
+                            console.log("success....");
+                            logInFormDom.style.display = "none";
+                            // let user_id = JSON.parse(text).user_id;
+                            let user_id = text;
+                            //显示用户
+                            logInUserConfig(username,user_id);
+                        }
+                        /*if (text === "success") {
                             console.log("success....");
                             logInFormDom.style.display = "none";
                             //显示用户
                             logInUserConfig(username);
-                            /*let rightHeaderDom = document.querySelector("header .h_rightBox");
+                            /!*let rightHeaderDom = document.querySelector("header .h_rightBox");
                             rightHeaderDom.innerHTML = "<div class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
                                 "          </div><div class=\'hr_userInfo\'>\n" +
                                 "              <p class=\'hr_username\'>"+ username +"</p>\n" +
@@ -319,15 +346,15 @@
                                 xhr.send();
                                 console.log("cookie after xhr==="+document.cookie);
                                 //document.cookie.
-                            }*/
-                        }else{
+                            }*!/
+                        } else {
                             console.log("fail...");
                             passwordInputDom.value = null;
                             let passwordTipDom = passwordInputDom.nextElementSibling;
                             passwordTipDom.classList.remove("good");
                             passwordTipDom.innerHTML = "账号或密码错误！";
                             passwordTipDom.classList.add("bad");
-                        }
+                        }*/
                     }
                 }
                 xhr.send(data);
@@ -336,28 +363,28 @@
         my.$date.getFullTime(dateInfoDom);
         let dateTimer = setInterval(function () {
             my.$date.getFullTime(dateInfoDom);
-        },1000);
+        }, 1000);
     };
     // 函数命名区间
     let my = {};
     //date相关的函数
     my.$date = {};
-    my.$date.weekArr = ['日','一','二','三','四','五','六'];
-    my.$date.getFullTime = function(dom) {
+    my.$date.weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+    my.$date.getFullTime = function (dom) {
         let date = new Date();
         let year = date.getFullYear();
-        let month = date.getMonth()+1;
+        let month = date.getMonth() + 1;
         let day = date.getDate();
         let weekday = date.getDay();
         let hour = date.getHours();
         let minute = date.getMinutes();
         let second = date.getSeconds();
-        dom.innerHTML = year + "年" + month + "月" + day + "日" + "，星期" + this.weekArr[weekday] + "，" + this.formatClockTime(hour,minute,second);
+        dom.innerHTML = year + "年" + month + "月" + day + "日，" + this.weekArr[weekday] + "，" + this.formatClockTime(hour, minute, second);
     };
-    my.$date.formatClockTime = function(hour,minute,second) {
-        let h = hour<10?"0"+hour:hour;
-        let m = minute<10?"0"+minute:minute;
-        let s = second<10?"0"+second:second;
+    my.$date.formatClockTime = function (hour, minute, second) {
+        let h = hour < 10 ? "0" + hour : hour;
+        let m = minute < 10 ? "0" + minute : minute;
+        let s = second < 10 ? "0" + second : second;
         return h + ":" + m + ":" + s;
     }
 
@@ -366,20 +393,20 @@
     /**
      * 账号，密码验证是否为空。或是少于6 位字符。
      * */
-    my.$login.validate = function(dom){
+    my.$login.validate = function (dom) {
         console.log(dom.name);
         let value = dom.value
         let name = dom.name;
         let tipDom = dom.nextElementSibling;
-        if(!value){
+        if (!value) {
             tipDom.classList.add("bad");
-            tipDom.innerHTML = "请输入" + (name === "username" ? "用户名！":"密码！");
+            tipDom.innerHTML = "请输入" + (name === "username" ? "用户名！" : "密码！");
             return false;
-        }else if(value.length < 6){
+        } else if (value.length < 6) {
             tipDom.classList.add("bad");
-            tipDom.innerHTML = (name === "username" ? "用户名":"密码") + "长度不得小于6个字符！";
+            tipDom.innerHTML = (name === "username" ? "用户名" : "密码") + "长度不得小于6个字符！";
             return false;
-        }else{
+        } else {
             tipDom.classList.add("good");
             tipDom.innerHTML = "";
             return true;

@@ -11,8 +11,8 @@ public class User {
     private String username;
     private String password;
     private String user_img_url;
-    private int userId;
-    private int signUpDate;
+    private int user_id;
+    private long sign_up_date;
 
     public User() {
     }
@@ -50,19 +50,19 @@ public class User {
         this.user_img_url = user_img_url;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public int getSignUpDate() {
-        return signUpDate;
+    public long getSign_up_date() {
+        return sign_up_date;
     }
 
-    public void setSignUpDate(int signUpDate) {
-        this.signUpDate = signUpDate;
+    public void setSign_up_date(long sign_up_date) {
+        this.sign_up_date = sign_up_date;
     }
 }
