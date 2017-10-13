@@ -22,11 +22,11 @@ public class UserInfoPageServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         System.out.println(req.getHttpServletMapping().getMatchValue());//  1
+        System.out.println(req.getRequestURL());//  http://localhost:8080/helloweb/profile/1
+        System.out.println(req.getRequestURI());//  /helloweb/profile/1
         System.out.println(req.getContextPath());// /helloweb
-        System.out.println(req.getServletPath());// /user
-        System.out.println(req.getRequestURL());//  http://localhost:8080/helloweb/user/1
+        System.out.println(req.getServletPath());// /profile
         System.out.println(req.getPathInfo());//    /1
-        System.out.println(req.getRequestURI());//  /helloweb/user/1
 
         int user_id = Integer.valueOf(req.getPathInfo().split("/")[1]);
         System.out.println(user_id);
@@ -47,7 +47,7 @@ public class UserInfoPageServlet extends HttpServlet{
         user.setSign_up_date(new Date().getTime());
         user.setUser_img_url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5f/5f786f156545ed8ec0772ce809d5b90f0dd7a9e2_full.jpg");
         req.setAttribute("user",user);
-        req.getRequestDispatcher("/userInfo/userInfo.jsp").forward(req,resp);
+        req.getRequestDispatcher("/user/user.jsp").forward(req,resp);
 //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
     }
 

@@ -33,11 +33,19 @@
     .hr_ulbox li{height:30px;line-height:30px;}
     .hr_logOut{background:#f00;color:#fff;}
 
-    .hl_title{font-weight:400;font-size:18px;display:inline-block;padding-right:10px;}
+    .hl_title{font-weight:400;font-size:18px;display:inline-block;padding-right:10px;color:#a9594c;}
+    .hl_title:hover{color:#de1010;}
     .hl_dateInfo{padding-left:5px;font-size:10px;}
 </style>
 <header class="header">
     <div class="h_rightBox">
+        <%--<div class='hr_btn'>
+            <a href='javascript:void(0);' class='hr_logInBtn'>登录</a>
+        </div>
+        <span class='hr_midSpan'>|</span>
+        <div class='hr_btn'>
+            <a href='javascript:void(0);' class='hr_signUpBtn'>注册</a>
+        </div>--%>
         <%--<a href="user/1" class="hr_userImg"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg" alt="img" width="20" height="20">
           </a><div class="hr_userInfo">
               <p class="hr_username">username</p>
@@ -97,7 +105,7 @@
 
             // return;
             function logInConfig() {
-                let defaultHtml = "<div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_logInBtn\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_signUpBtn\'>注册</a></div>";
+                let defaultHtml = "<div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_logInBtn\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'register\' class=\'hr_signUpBtn\'>注册</a></div>";
                 rightHeaderDom.innerHTML = defaultHtml;
                 let logInBtnDom = document.querySelector("header .hr_logInBtn");
                 if (logInBtnDom) logInBtnDom.onclick = function () {
@@ -109,7 +117,7 @@
 
             function logInUserConfig(uName,uId) {
                 console.log("uName==="+uName);
-                rightHeaderDom.innerHTML = "<a href='user/"+uId+"' class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
+                rightHeaderDom.innerHTML = "<a href='profile/"+uId+"' class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
                     "          </a><div class=\'hr_userInfo\'>\n" +
                     "              <p class=\'hr_username\'>" + uName + "</p>\n" +
                     "              <ul class=\'hr_ulbox\'>\n" +
@@ -395,7 +403,7 @@
      * */
     my.$login.validate = function (dom) {
         console.log(dom.name);
-        let value = dom.value
+        let value = dom.value;
         let name = dom.name;
         let tipDom = dom.nextElementSibling;
         if (!value) {

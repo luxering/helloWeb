@@ -19,6 +19,17 @@ import java.io.PrintWriter;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(req.getHttpServletMapping().getMatchValue());//  register
+        System.out.println(req.getRequestURL());// http://localhost:8080/helloweb/register
+        System.out.println(req.getRequestURI());//  /helloweb/register
+        System.out.println(req.getContextPath());// /helloweb
+        System.out.println(req.getServletPath());// /register
+        System.out.println(req.getPathInfo());//    null
+
+        if(req.getServletPath().indexOf("register")!=-1){
+            System.out.println("register...");
+            req.getRequestDispatcher("user/register.jsp").forward(req,resp);
+        }
         //PrintWriter out = resp.getWriter();
         //out.print("hello im fine too,ty!");
         /*String username = req.getParameter("username");
@@ -43,6 +54,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("signin...");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         System.out.println("username==" + username + ",password==" + password);

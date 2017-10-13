@@ -27,6 +27,10 @@ public class LogOutServlet extends HttpServlet{
                 cookies[i].setMaxAge(0);
                 System.out.println(cookies[i].getName()+":"+cookies[i].getValue());
                 resp.addCookie(cookies[i]);
+            }else if(cookies[i].getName().equals("user_id")){
+                cookies[i].setValue(null);
+                cookies[i].setMaxAge(0);
+                resp.addCookie(cookies[i]);
             }
         }
 //        resp.addCookie(cookies[index]);
