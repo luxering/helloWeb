@@ -21,6 +21,8 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //validate
+        //register
         resp.sendRedirect("success.jsp");
     }
 }

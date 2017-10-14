@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 
         if(req.getServletPath().indexOf("register")!=-1){
             System.out.println("register...");
-            req.getRequestDispatcher("user/register.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/user/register.jsp").forward(req,resp);
         }
         //PrintWriter out = resp.getWriter();
         //out.print("hello im fine too,ty!");

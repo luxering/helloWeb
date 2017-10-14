@@ -28,27 +28,35 @@ public class UserInfoPageServlet extends HttpServlet{
         System.out.println(req.getServletPath());// /profile
         System.out.println(req.getPathInfo());//    /1
 
-        int user_id = Integer.valueOf(req.getPathInfo().split("/")[1]);
-        System.out.println(user_id);
+        try {
+            int user_id = Integer.valueOf(req.getPathInfo().split("/")[1]);
+            System.out.println(user_id);
 
-        //mysql
 
-        //test
-        /*String username = "";
-        Cookie cookies[] = req.getCookies();
-        for(int i=0,len=cookies.length;i<len;i++){
-            if(cookies[i].getName().indexOf("username")!=-1){
-                username = cookies[i].getValue();
+            //mysql
+
+            //test
+            /*String username = "";
+            Cookie cookies[] = req.getCookies();
+            for(int i=0,len=cookies.length;i<len;i++){
+                if(cookies[i].getName().indexOf("username")!=-1){
+                    username = cookies[i].getValue();
+                }
+            }*/
+            if(user_id != 1){
+                throw  new Exception();
             }
-        }*/
-        User user = new User();
-        user.setUser_id(user_id);
-        user.setUsername("myhello");
-        user.setSign_up_date(new Date().getTime());
-        user.setUser_img_url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5f/5f786f156545ed8ec0772ce809d5b90f0dd7a9e2_full.jpg");
-        req.setAttribute("user",user);
-        req.getRequestDispatcher("/user/user.jsp").forward(req,resp);
-//        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
+            User user = new User();
+            user.setUser_id(user_id);
+            user.setUsername("myhello");
+            user.setSign_up_date(new Date().getTime());
+            user.setUser_img_url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5f/5f786f156545ed8ec0772ce809d5b90f0dd7a9e2_full.jpg");
+            req.setAttribute("user",user);
+            req.getRequestDispatcher("/WEB-INF/user/user.jsp").forward(req,resp);
+        //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

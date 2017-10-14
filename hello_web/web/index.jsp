@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%--<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <link rel="icon" href="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg">
@@ -14,8 +14,9 @@
     <meta name="description" content="hello web is a web.Hello Web is a website">
     <title>Hello Web</title>
 </head>
-<body>
-<style>
+<body>--%>
+<%@include file="WEB-INF/pages/header.html"%>
+<%--<style>
     *{margin:0;padding:0;}
     body{font-size:14px;font-family:"微软雅黑";/*background:url("http://127.0.0.1/My Documents/My Pictures/lets_race_loadingscreen_tga.png") no-repeat;*/background:#e6f7e8;}
     a{text-decoration:none;}
@@ -39,25 +40,25 @@
 </style>
 <header class="header">
     <div class="h_rightBox">
-        <%--<div class='hr_btn'>
+        &lt;%&ndash;<div class='hr_btn'>
             <a href='javascript:void(0);' class='hr_logInBtn'>登录</a>
         </div>
         <span class='hr_midSpan'>|</span>
         <div class='hr_btn'>
             <a href='javascript:void(0);' class='hr_signUpBtn'>注册</a>
-        </div>--%>
-        <%--<a href="user/1" class="hr_userImg"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg" alt="img" width="20" height="20">
+        </div>&ndash;%&gt;
+        &lt;%&ndash;<a href="user/1" class="hr_userImg"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg" alt="img" width="20" height="20">
           </a><div class="hr_userInfo">
               <p class="hr_username">username</p>
               <ul class="hr_ulbox">
                   <li class="hr_logOut" title="退出">退出</li>
               </ul>
-         </div>--%>
+         </div>&ndash;%&gt;
     </div>
     <div class="h_leftBox">
         <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="hl_title">HelloWeb</h3></a><span class="hl_dateInfo">note:no:no 1:1:1</span>
     </div>
-</header>
+</header>--%>
 <style type="text/css">
     .loginForm{display:none;width:300px;height:150px;background:#bbcab9 !important;position:fixed;top:50px;left:50%;margin-left:-150px;padding-top:50px;color:#0a0a0a;}
     input{outline:none;border:none;font-family:"微软雅黑";}
@@ -85,6 +86,23 @@
     <div class="l_close" title="关闭">X</div>
 </div>
 <%--</form>--%>
+<style>
+    .main{width:80%;min-width:800px;min-height:800px;margin:0 auto;background:#ff0;}
+    .m_ulbox{overflow:hidden;}
+    .m_list{width:150px;height:200px;background:#333;margin-right:20px;float:left;}
+    .m_cov:after,.m_ulbox:after{content:"";clear:both;}
+</style>
+<div class="main">
+    <div class="m_cov">
+        <ul class="m_ulbox">
+            <li class="m_list">hello java</li>
+            <li class="m_list">hello html</li>
+            <li class="m_list">hello javascript</li>
+            <li class="m_list">hello servlet</li>
+            <li class="m_list">hello jsp</li>
+        </ul>
+    </div>
+</div>
 <script type="text/javascript">
     window.onload = function () {
         {
@@ -105,7 +123,7 @@
 
             // return;
             function logInConfig() {
-                let defaultHtml = "<div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_logInBtn\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'register\' class=\'hr_signUpBtn\'>注册</a></div>";
+                let defaultHtml = "<div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_logInBtn\' title=\'登录\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'register\' class=\'hr_signUpBtn\' title=\'注册\'>注册</a></div>";
                 rightHeaderDom.innerHTML = defaultHtml;
                 let logInBtnDom = document.querySelector("header .hr_logInBtn");
                 if (logInBtnDom) logInBtnDom.onclick = function () {
@@ -422,5 +440,13 @@
         return false;
     }
 </script>
+<style>
+    footer{height:100px;background:#7f3;}
+</style>
+<footer>
+    <div class="f_left">
+        <p>this is the end</p>
+    </div>
+</footer>
 </body>
 </html>

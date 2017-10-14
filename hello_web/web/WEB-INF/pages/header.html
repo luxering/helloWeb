@@ -1,0 +1,58 @@
+<%--
+    date:2017-10-14
+    time:14:39
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link rel="icon" href="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg">
+    <meta name="keywords" content="hello web,Hello Web">
+    <meta name="description" content="hello web is a web.Hello Web is a website">
+    <title>Hello Web</title>
+</head>
+<body>
+<style>
+    *{margin:0;padding:0;}
+    body{font-size:14px;font-family:"微软雅黑";background:#e6f7e8;}
+    a{text-decoration:none;}
+    a:hover{text-decoration:underline;color:#ff5722;}
+    ul,ol,li{list-style:none;}
+    header{height:30px;line-height:30px;background:#ccc;padding:0 50px;}
+    .h_rightBox{float:right;font-size:12px;}
+    .hr_btn{display:inline-block;}
+    .hr_midSpan{padding:0 5px;}
+    .hr_userImg,.hr_userInfo{display:inline-block;}
+    .hr_userInfo{position:relative;}
+    .hr_userInfo:hover .hr_ulbox{display:block;}
+    .hr_username{/*min-width:50px;*/}
+    .hr_ulbox{display:none;position: absolute;background:#3fc;width:50px;text-align:center;cursor:pointer;}
+    .hr_ulbox li{height:30px;line-height:30px;}
+    .hr_logOut{background:#f00;color:#fff;}
+
+    .hl_title{font-weight:400;font-size:18px;display:inline-block;padding-right:10px;color:#a9594c;}
+    .hl_title:hover{color:#de1010;}
+    .hl_dateInfo{padding-left:5px;font-size:10px;}
+</style>
+<header class="header">
+    <div class="h_rightBox">
+        <!--<div class='hr_btn'>
+            <a href='javascript:void(0);' class='hr_logInBtn' title="登录">登录</a>
+        </div>
+        <span class='hr_midSpan'>|</span>
+        <div class='hr_btn'>
+            <a href='javascript:void(0);' class='hr_signUpBtn' title="注册">注册</a>
+        </div>
+        <a href="user/1" class="hr_userImg"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg" alt="img" width="20" height="20">
+    </a><div class="hr_userInfo">
+            <p class="hr_username">username</p>
+            <ul class="hr_ulbox">
+                <li class="hr_logOut" title="退出">退出</li>
+            </ul>
+        </div>-->
+    </div>
+    <div class="h_leftBox">
+        <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="hl_title">HelloWeb</h3></a><span class="hl_dateInfo">note:no:no 1:1:1</span>
+    </div>
+</header>

@@ -58,7 +58,18 @@
         <param-name>bookAuthor</param-name>
         <param-value>Somebody Someone</param-value>
     </context-param>
-    <!--servletContext init params start-->
+    <!--servletContext init params end-->
+    <!--jsp config-->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <scripting-invalid>true</scripting-invalid>
+        </jsp-property-group>
+        <!--<jsp-property-group>
+            <url-pattern>*.html</url-pattern>
+            <default-content-type>UTF-8</default-content-type>
+        </jsp-property-group>-->
+    </jsp-config>
     <!--session config-->
     <session-config>
         <session-timeout>10</session-timeout>

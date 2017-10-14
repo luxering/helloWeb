@@ -6,16 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>register...</title>
-    <style>
-        *{margin:0;padding:0;}
-        body{font-family:"微软雅黑";font-size:14px;}
-        header{height:50px;background:#f00;}
-    </style>
-</head>
-<body>
+<%@include file="/WEB-INF/pages/header.html"%>
 <style type="text/css">
     .loginForm{width:300px;background:#bbcab9 !important;position:fixed;top:100px;left:50%;margin-left:-150px;padding-top:50px;color:#0a0a0a;}
     input{outline:none;border:none;font-family:"微软雅黑";}
@@ -31,7 +22,7 @@
     .l_close{position:absolute;right:0;top:0;width:20px;height:20px;background:#f00;color:#fff;line-height:20px;text-align:center;cursor:pointer;font-size:10px;}
     .l_close:hover{background:#e40505;}
 </style>
-<header><h1><a href="${pageContext.request.contextPath}" title="homepage">helloweb</a></h1></header>
+<%--<header><h1><a href="${pageContext.request.contextPath}" title="homepage">helloweb</a></h1></header>--%>
 <form method="post" action="signUp" class="loginForm">
     <p class="l_pline"><span class="lp_text">用户名：</span><input type="text" name="username" maxlength="20" class="l_username l_inputInfo">
         <span class="l_inputTip">hello</span>
