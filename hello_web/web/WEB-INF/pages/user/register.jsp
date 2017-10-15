@@ -41,7 +41,6 @@
         let passwordInputDom1 = document.querySelector(".loginForm .l_password1");
         let passwordInputDom2 = document.querySelector(".loginForm .l_password2");
         document.querySelector(".loginForm .l_submitBtn").onclick = function () {
-            // alert(1);
             let username = usernameInputDom.value;
             let password1 = passwordInputDom1.value;
             let password2 = passwordInputDom2.value;

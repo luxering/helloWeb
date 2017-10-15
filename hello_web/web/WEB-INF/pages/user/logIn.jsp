@@ -7,27 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/pages/templet/header.html"%>
-    <%--<div class="main">
-        <p>logOut Success!</p>
-        <p>将自动跳转至主页...</p>
-        <p><span class="infoText">3</span>秒...</p>
-    </div>
-    <script>
-        // window.location.href = "/helloweb;/"
-        (function () {
-            let start = 3;
-            let infoDom = document.querySelector(".infoText");
-            let timer = setInterval(function(){
-                if(start<=0){
-                    clearInterval(timer);
-                    window.location.href = "/helloweb/";
-                    return;
-                }
-                start --;
-                infoDom.innerHTML = start;
-            },1000);
-        })()
-    </script>--%>
 <style type="text/css">
     .loginForm{width:300px;height:150px;background:#bbcab9 !important;position:fixed;top:50px;left:50%;margin-left:-150px;padding-top:50px;color:#0a0a0a;}
     input{outline:none;border:none;font-family:"微软雅黑";}
@@ -57,74 +36,7 @@
 <%--</div>--%>
 <script type="text/javascript">
     window.onload = function () {
-        /*{
-            let cookie = document.cookie;
-            console.log("cookie at window.onload===" + cookie);
-            let cookieArr = cookie.split(";");
-            let username,user_id = 0;
-            for (let i = 0, len = cookieArr.length; i < len; i++) {
-                console.log("cookieArr[i]=="+cookieArr[i].trim());
-                if (cookieArr[i].indexOf("username") !== -1) {
-                    username = cookieArr[i].trim().substring("username".length + 1);
-                }else if(cookieArr[i].indexOf("user_id")!==-1){
-                    user_id = cookieArr[i].trim().substring("user_id".length + 1);
-                }
-            }
-            let rightHeaderDom = document.querySelector("header .h_rightBox");
 
-            // return;
-            function logInConfig() {
-                let defaultHtml = "<div class=\'hr_btn\'><a href=\'login\' class=\'hr_logInBtn\' title=\'登录\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'register\' class=\'hr_signUpBtn\' title=\'注册\'>注册</a></div>";
-                rightHeaderDom.innerHTML = defaultHtml;
-                let logInBtnDom = document.querySelector("header .hr_logInBtn");
-                if (logInBtnDom) logInBtnDom.onclick = function () {
-                    logInFormDom.style.display = "block";
-                    usernameInputDom.focus();
-                };
-            }
-
-            function logInUserConfig(uName,uId) {
-                console.log("uName==="+uName);
-                rightHeaderDom.innerHTML = "<a href='profile/"+uId+"' class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
-                    "          </a><div class=\'hr_userInfo\'>\n" +
-                    "              <p class=\'hr_username\'>" + uName + "</p>\n" +
-                    "              <ul class=\'hr_ulbox\'>\n" +
-                    "                  <li class=\'hr_logOut\' title=\'退出\'>退出</li>\n" +
-                    "              </ul>\n" +
-                    "          </div>";
-                let userImgDom = document.querySelector("header .hr_userImg");
-                //click for test
-                if (userImgDom) userImgDom.onclick = function () {
-                    console.log("uName=="+uName,"uId=="+uId);
-                }
-                let logOutDom = document.querySelector("header .hr_logOut");
-                if (logOutDom) logOutDom.onclick = function () {
-                    //退出，显示“登录”
-                    logInConfig();
-                    let xhr = new XMLHttpRequest();
-                    xhr.open("get", "logOut", true);
-                    xhr.onreadystatechange = function () {
-                        if (this.readyState === 4 && this.status === 200) {
-                            let text = this.responseText;
-                            console.log("response===" + text);
-                            console.log("cookie in xhr====" + document.cookie);
-                        }
-                    }
-                    xhr.send();
-                    console.log("cookie after xhr===" + document.cookie);
-                }
-            }
-
-            if (!username) {
-                //显示“登录”
-                logInConfig();
-            } else {
-                //显示用户
-                logInUserConfig(username,user_id);
-            }
-        }*/
-        // let dateInfoDom = document.querySelector("header .hl_dateInfo");
-        // let logInFormDom = document.querySelector(".loginForm");
         let loginSubmitBtnDom = document.querySelector(".loginForm .l_submitBtn");
         let usernameInputDom = document.querySelector(".loginForm .l_username");
         let passwordInputDom = document.querySelector(".loginForm .l_password");
@@ -142,33 +54,9 @@
         loginSubmitBtnDom.onclick = function () {
             return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom);
         }
-        /*my.$date.getFullTime(dateInfoDom);
-        let dateTimer = setInterval(function () {
-            my.$date.getFullTime(dateInfoDom);
-        }, 1000);*/
     };
     // 函数命名区间
     let my = {};
-    //date相关的函数
-    /*my.$date = {};
-    my.$date.weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-    my.$date.getFullTime = function (dom) {
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let weekday = date.getDay();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
-        dom.innerHTML = year + "年" + month + "月" + day + "日，" + this.weekArr[weekday] + "，" + this.formatClockTime(hour, minute, second);
-    };
-    my.$date.formatClockTime = function (hour, minute, second) {
-        let h = hour < 10 ? "0" + hour : hour;
-        let m = minute < 10 ? "0" + minute : minute;
-        let s = second < 10 ? "0" + second : second;
-        return h + ":" + m + ":" + s;
-    }*/
 
     //登录相关的函数
     my.$login = {};
