@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/WEB-INF/pages/header.html"%>
+<%@include file="/WEB-INF/pages/templet/header.html"%>
     <div class="main">
         <p>Success!</p>
         <p>
@@ -21,8 +21,9 @@
                 countdown --;
                 infoTextDom.innerHTML = countdown;
                 if(countdown<=0){
+                    clearInterval(countdownTimer);
                     countdownTimer = null;
-                    window.location.href = "/helloweb/";
+                    window.location.href = "${pageContext.request.contextPath}/";
                 }
             },1000);
         }

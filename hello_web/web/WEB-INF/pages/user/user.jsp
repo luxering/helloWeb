@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/WEB-INF/pages/header.html"%>
+<%@include file="/WEB-INF/pages/templet/header.html" %>
 <%--<style>
     *{margin:0;padding:0;}
     ul,or,li{list-style:none;}
@@ -22,8 +22,8 @@
     </div>
 </header>--%>
 <style>
-    .mider{background:#3fc;}
-    .m_wrap{margin:0 auto;width:500px;min-height:300px;background:#696;}
+    .mider {background: #3fc;}
+    .m_wrap {margin: 0 auto;width: 500px;min-height: 300px;background: #696;}
 </style>
 <div class="mider">
     <div class="m_wrap">
@@ -38,11 +38,19 @@
     </div>
     <script>
         {
+            let beautifulTime = function (time) {
+                return time < 10 ? "0" + time : time;
+            }
+            let changeTimeFormat = function (date) {
+                    let hour = date.getHours();
+                    let minute = date.getMinutes();
+                    let second = date.getSeconds();
+                    return beautifulTime(hour) + ":" + beautifulTime(minute) + ":" + beautifulTime(second);
+                }
             ;(function () {
-                let long = ${user.sign_up_date};
-                let date = new Date(long);
+                let date = new Date(${user.sign_up_date});
                 console.log(date);
-                document.querySelector(".mider .user_sign_up_date").innerHTML = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+                document.querySelector(".mider .user_sign_up_date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " , " + changeTimeFormat(date);
             })()
         }
     </script>

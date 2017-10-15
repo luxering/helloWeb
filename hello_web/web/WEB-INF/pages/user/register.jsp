@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/WEB-INF/pages/header.html"%>
+<%@include file="/WEB-INF/pages/templet/header.html"%>
 <style type="text/css">
     .loginForm{width:300px;background:#bbcab9 !important;position:fixed;top:100px;left:50%;margin-left:-150px;padding-top:50px;color:#0a0a0a;}
     input{outline:none;border:none;font-family:"微软雅黑";}

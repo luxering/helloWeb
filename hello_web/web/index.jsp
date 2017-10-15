@@ -15,7 +15,7 @@
     <title>Hello Web</title>
 </head>
 <body>--%>
-<%@include file="WEB-INF/pages/header.html"%>
+<%@include file="WEB-INF/pages/templet/header.html"%>
 <%--<style>
     *{margin:0;padding:0;}
     body{font-size:14px;font-family:"微软雅黑";/*background:url("http://127.0.0.1/My Documents/My Pictures/lets_race_loadingscreen_tga.png") no-repeat;*/background:#e6f7e8;}
@@ -59,7 +59,7 @@
         <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="hl_title">HelloWeb</h3></a><span class="hl_dateInfo">note:no:no 1:1:1</span>
     </div>
 </header>--%>
-<style type="text/css">
+<%--<style type="text/css">
     .loginForm{display:none;width:300px;height:150px;background:#bbcab9 !important;position:fixed;top:50px;left:50%;margin-left:-150px;padding-top:50px;color:#0a0a0a;}
     input{outline:none;border:none;font-family:"微软雅黑";}
     .l_pline{height:50px;}
@@ -74,7 +74,7 @@
     .l_close{position:absolute;right:0;top:0;width:20px;height:20px;background:#f00;color:#fff;line-height:20px;text-align:center;cursor:pointer;font-size:10px;}
     .l_close:hover{background:#e40505;}
 </style>
-<%--<form method="post" action="login" class="loginForm" name="loginForm">--%>
+&lt;%&ndash;<form method="post" action="login" class="loginForm" name="loginForm">&ndash;%&gt;
 <div class="loginForm">
     <p class="l_pline"><span class="lp_text">用户名：</span><input type="text" name="username" maxlength="20" class="l_username l_inputInfo">
         <span class="l_inputTip">hello</span>
@@ -84,8 +84,8 @@
     </p>
     <p class="l_pline"><input type="button" value="提 交" class="l_submitBtn" title="提 交"></p>
     <div class="l_close" title="关闭">X</div>
-</div>
-<%--</form>--%>
+&lt;%&ndash;</form>&ndash;%&gt;
+</div>--%>
 <style>
     .main{width:80%;min-width:800px;min-height:800px;margin:0 auto;background:#ff0;}
     .m_ulbox{overflow:hidden;}
@@ -103,7 +103,79 @@
         </ul>
     </div>
 </div>
-<script type="text/javascript">
+<script>
+    ;(function () {
+        /*let cookie = document.cookie;
+        console.log("cookie at window.onload===" + cookie);
+        // console.log(logInBtnDom);
+        let cookieArr = cookie.split(";");
+        let username,user_id = 0;
+        for (let i = 0, len = cookieArr.length; i < len; i++) {
+            console.log("cookieArr[i]=="+cookieArr[i].trim());
+            if (cookieArr[i].indexOf("username") !== -1) {
+                username = cookieArr[i].trim().substring("username".length + 1);
+            }else if(cookieArr[i].indexOf("user_id")!==-1){
+                user_id = cookieArr[i].trim().substring("user_id".length + 1);
+            }
+        }*/
+        let username = "${cookie.username.value}";
+        let user_id = "${cookie.user_id.value}";
+        let rightHeaderDom = document.querySelector("header .h_rightBox");
+
+        // return;
+        function logInConfig() {
+            let defaultHtml = "<div class=\'hr_btn\'><a href=\'login\' class=\'hr_logInBtn\' title=\'登录\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'register\' class=\'hr_signUpBtn\' title=\'注册\'>注册</a></div>";
+            rightHeaderDom.innerHTML = defaultHtml;
+            /*let logInBtnDom = document.querySelector("header .hr_logInBtn");
+            if (logInBtnDom) logInBtnDom.onclick = function () {
+                logInFormDom.style.display = "block";
+                usernameInputDom.focus();
+                // my.$login.clearLoginTipClass(usernameInputDom);
+            };*/
+        }
+
+        function logInUserConfig(uName,uId) {
+            console.log("uName==="+uName);
+            rightHeaderDom.innerHTML = "<a href='profile/"+uId+"' class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
+                "          </a><div class=\'hr_userInfo\'>\n" +
+                "              <p class=\'hr_username\'>" + uName + "</p>\n" +
+                "              <ul class=\'hr_ulbox\'>\n" +
+                "                  <li class=\'hr_logOut\' title=\'退出\'>退出</li>\n" +
+                "              </ul>\n" +
+                "          </div>";
+            /*let userImgDom = document.querySelector("header .hr_userImg");
+            //click for test
+            if (userImgDom) userImgDom.onclick = function () {
+                console.log("uName=="+uName,"uId=="+uId);
+            }*/
+            let logOutDom = document.querySelector("header .hr_logOut");
+            if (logOutDom) logOutDom.onclick = function () {
+                //退出，显示“登录”
+                logInConfig();
+                let xhr = new XMLHttpRequest();
+                xhr.open("get", "logOut", true);
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        let text = this.responseText;
+                        console.log("response===" + text);
+                        console.log("cookie in xhr====" + document.cookie);
+                    }
+                }
+                xhr.send();
+                console.log("cookie after xhr===" + document.cookie);
+            }
+        }
+
+        if (!username) {
+            //显示“登录”
+            logInConfig();
+        } else {
+            //显示用户
+            logInUserConfig(username,user_id);
+        }
+    })()
+</script>
+<%--<script type="text/javascript">
     window.onload = function () {
         {
             let cookie = document.cookie;
@@ -123,7 +195,7 @@
 
             // return;
             function logInConfig() {
-                let defaultHtml = "<div class=\'hr_btn\'><a href=\'javascript:void(0);\' class=\'hr_logInBtn\' title=\'登录\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'register\' class=\'hr_signUpBtn\' title=\'注册\'>注册</a></div>";
+                let defaultHtml = "<div class=\'hr_btn\'><a href=\'login\' class=\'hr_logInBtn\' title=\'登录\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'register\' class=\'hr_signUpBtn\' title=\'注册\'>注册</a></div>";
                 rightHeaderDom.innerHTML = defaultHtml;
                 let logInBtnDom = document.querySelector("header .hr_logInBtn");
                 if (logInBtnDom) logInBtnDom.onclick = function () {
@@ -439,7 +511,7 @@
         }
         return false;
     }
-</script>
+</script>--%>
 <style>
     footer{height:100px;background:#7f3;}
 </style>

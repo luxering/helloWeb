@@ -26,9 +26,12 @@ public class LoginServlet extends HttpServlet {
         System.out.println(req.getServletPath());// /register
         System.out.println(req.getPathInfo());//    null
 
-        if(req.getServletPath().indexOf("register")!=-1){
+        if(req.getServletPath().indexOf("login")!=-1){
+            System.out.println("login...");
+            req.getRequestDispatcher("/WEB-INF/pages/user/logIn.jsp").forward(req,resp);
+        }else if(req.getServletPath().indexOf("register")!=-1){
             System.out.println("register...");
-            req.getRequestDispatcher("/WEB-INF/user/register.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/pages/user/register.jsp").forward(req,resp);
         }
         //PrintWriter out = resp.getWriter();
         //out.print("hello im fine too,ty!");
@@ -58,7 +61,7 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         System.out.println("username==" + username + ",password==" + password);
-        PrintWriter out = resp.getWriter();
+//        PrintWriter out = resp.getWriter();
         /*System.out.println("username.equals==="+username.equals("myhello")+",username=="+(username=="myhello"));
         System.out.println("password.equals==="+password.equals("myworld")+",password=="+(password=="myworld"));*/
 //        String email = getServletConfig().getInitParameter("email");
@@ -82,13 +85,13 @@ public class LoginServlet extends HttpServlet {
                     "user_id:"+ user_id +"}";
             System.out.println(userJson);
             out.print(userJson);*/
-            out.print(user_id);
+//            out.print(user_id);
 //            out.print("success");
-            //resp.sendRedirect("success.jsp");
-        } else {
+            resp.sendRedirect(req.getContextPath());
+        } /*else {
             //req.getRequestDispatcher("fail.jsp").forward(req,resp);
             //resp.sendRedirect("fail.jsp");
             out.print("fail");
-        }
+        }*/
     }
 }
