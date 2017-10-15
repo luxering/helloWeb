@@ -23,7 +23,7 @@
                 if(countdown<=0){
                     clearInterval(countdownTimer);
                     countdownTimer = null;
-                    window.location.href = "${pageContext.request.contextPath}/";
+                    window.location.href = "${pageContext.request.contextPath}";
                 }
             },1000);
         }

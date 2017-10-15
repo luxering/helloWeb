@@ -34,7 +34,6 @@
         <span class="l_inputTip">world</span>
     </p>
     <p class="l_pline last"><input type="submit" value="提 交" class="l_submitBtn" title="提 交"></p>
-    <div class="l_close" title="关闭">X</div>
 </form>
 <script>
     {

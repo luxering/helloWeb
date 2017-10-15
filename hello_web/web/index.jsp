@@ -103,7 +103,7 @@
         </ul>
     </div>
 </div>
-<script>
+<%--<script>
     ;(function () {
         /*let cookie = document.cookie;
         console.log("cookie at window.onload===" + cookie);
@@ -165,7 +165,6 @@
                 console.log("cookie after xhr===" + document.cookie);
             }
         }
-
         if (!username) {
             //显示“登录”
             logInConfig();
@@ -174,7 +173,7 @@
             logInUserConfig(username,user_id);
         }
     })()
-</script>
+</script>--%>
 <%--<script type="text/javascript">
     window.onload = function () {
         {

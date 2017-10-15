@@ -26,6 +26,19 @@ public class LoginServlet extends HttpServlet {
         System.out.println(req.getServletPath());// /register
         System.out.println(req.getPathInfo());//    null
 
+        try {
+            Cookie[] cookies = req.getCookies();
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("username")){
+                        throw new Exception();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //already login send error page
+            return;
+        }
+
         if(req.getServletPath().indexOf("login")!=-1){
             System.out.println("login...");
             req.getRequestDispatcher("/WEB-INF/pages/user/logIn.jsp").forward(req,resp);

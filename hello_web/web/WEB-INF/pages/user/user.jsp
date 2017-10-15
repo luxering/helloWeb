@@ -7,20 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/pages/templet/header.html" %>
-<%--<style>
-    *{margin:0;padding:0;}
-    ul,or,li{list-style:none;}
-    header{background:#0f0;height:30px;padding:20px 0;}
-    header .h_rightBox{float:right;}
-</style>--%>
-<%--<header class="header">
-    <div class="h_rightBox">
-        <a href=""></a><div>test</div>
-    </div>
-    <div class="h_leftBox">
-        <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="h_title">HelloWeb</h3></a>
-    </div>
-</header>--%>
 <style>
     .mider {background: #3fc;}
     .m_wrap {margin: 0 auto;width: 500px;min-height: 300px;background: #696;}

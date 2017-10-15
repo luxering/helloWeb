@@ -53,6 +53,52 @@
         </div>-->
     </div>
     <div class="h_leftBox">
-        <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="hl_title">HelloWeb</h3></a><span class="hl_dateInfo">note:no:no 1:1:1</span>
+        <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="hl_title">HelloWeb</h3></a><!--<span class="hl_dateInfo">note:no:no 1:1:1</span>-->
     </div>
 </header>
+<script>
+    ;(function () {
+        let username = "${cookie.username.value}";
+        let user_id = "${cookie.user_id.value}";
+        let rightHeaderDom = document.querySelector("header .h_rightBox");
+
+        function logInConfig() {
+            let defaultHtml = "<div class=\'hr_btn\'><a href=\'${pageContext.request.contextPath}/login\' class=\'hr_logInBtn\' title=\'登录\'>登录</a></div><span class=\'hr_midSpan\'>|</span><div class=\'hr_btn\'><a href=\'${pageContext.request.contextPath}/register\' class=\'hr_signUpBtn\' title=\'注册\'>注册</a></div>";
+            rightHeaderDom.innerHTML = defaultHtml;
+        }
+
+        function logInUserConfig(uName,uId) {
+            console.log("uName==="+uName);
+            rightHeaderDom.innerHTML = "<a href=\'${pageContext.request.contextPath}/profile/"+uId+"' class=\'hr_userImg\'><img src=\'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg\' alt=\'img\' width=\'20\' height=\'20\'>\n" +
+                "          </a><div class=\'hr_userInfo\'>\n" +
+                "              <p class=\'hr_username\'>" + uName + "</p>\n" +
+                "              <ul class=\'hr_ulbox\'>\n" +
+                "                  <li class=\'hr_logOut\' title=\'退出\'>退出</li>\n" +
+                "              </ul>\n" +
+                "          </div>";
+            let logOutDom = document.querySelector("header .hr_logOut");
+            if (logOutDom) logOutDom.onclick = function () {
+                //退出，显示“登录”
+                logInConfig();
+                let xhr = new XMLHttpRequest();
+                xhr.open("get", "logOut", true);
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        let text = this.responseText;
+                        console.log("response===" + text);
+                        console.log("cookie in xhr====" + document.cookie);
+                    }
+                }
+                xhr.send();
+                console.log("cookie after xhr===" + document.cookie);
+            }
+        }
+        if (!username) {
+            //显示“登录”
+            logInConfig();
+        } else {
+            //显示用户
+            logInUserConfig(username,user_id);
+        }
+    })()
+</script>

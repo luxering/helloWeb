@@ -43,7 +43,7 @@
     .l_close{position:absolute;right:0;top:0;width:20px;height:20px;background:#f00;color:#fff;line-height:20px;text-align:center;cursor:pointer;font-size:10px;}
     .l_close:hover{background:#e40505;}
 </style>
-<form method="post" action="login" class="loginForm" name="loginForm">
+<form method="post" action="${pageContext.request.contextPath}/login" class="loginForm" name="loginForm">
 <%--<div class="loginForm">--%>
     <p class="l_pline"><span class="lp_text">用户名：</span><input type="text" name="username" maxlength="20" class="l_username l_inputInfo">
         <span class="l_inputTip">hello</span>
@@ -53,12 +53,11 @@
     </p>
     <%--<p class="l_pline"><input type="button" value="提 交" class="l_submitBtn" title="提 交"></p>--%>
     <p class="l_pline"><input type="submit" value="提 交" class="l_submitBtn" title="提 交"></p>
-    <div class="l_close" title="关闭">X</div>
 </form>
 <%--</div>--%>
 <script type="text/javascript">
     window.onload = function () {
-        {
+        /*{
             let cookie = document.cookie;
             console.log("cookie at window.onload===" + cookie);
             let cookieArr = cookie.split(";");
@@ -109,8 +108,6 @@
                             let text = this.responseText;
                             console.log("response===" + text);
                             console.log("cookie in xhr====" + document.cookie);
-                            // window.location.href = text;
-                            // window.location.reload();
                         }
                     }
                     xhr.send();
@@ -125,10 +122,9 @@
                 //显示用户
                 logInUserConfig(username,user_id);
             }
-        }
-        let dateInfoDom = document.querySelector("header .hl_dateInfo");
-        let logInFormDom = document.querySelector(".loginForm");
-        let closeLogInDom = document.querySelector(".loginForm .l_close");
+        }*/
+        // let dateInfoDom = document.querySelector("header .hl_dateInfo");
+        // let logInFormDom = document.querySelector(".loginForm");
         let loginSubmitBtnDom = document.querySelector(".loginForm .l_submitBtn");
         let usernameInputDom = document.querySelector(".loginForm .l_username");
         let passwordInputDom = document.querySelector(".loginForm .l_password");
@@ -143,60 +139,18 @@
         usernameInputDom.onblur = passwordInputDom.onblur = function () {
             my.$login.validate(this);
         }
-        closeLogInDom.onclick = function () {
-            logInFormDom.style.display = "none";
-            usernameInputDom.value = null;
-            passwordInputDom.value = null;
-            usernameInputDom.nextElementSibling.innerHTML = passwordInputDom.nextElementSibling.innerHTML = null;
-            my.$login.clearLoginTipClass(usernameInputDom);
-            my.$login.clearLoginTipClass(passwordInputDom);
-        };
         loginSubmitBtnDom.onclick = function () {
-            // alert(1);
-            // return false;
-            // for(let key in document){console.log(key+"==="+document[key]);}
             return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom);
-            /*if (my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom)) {
-                let username = usernameInputDom.value;
-                let password = passwordInputDom.value;
-                let data = "username=" + username + "&password=" + password;
-                console.log("date==" + data);
-                let xhr = new XMLHttpRequest();
-                xhr.open("post", "login", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function () {
-                    if (this.readyState === 4 && this.status === 200) {
-                        let text = this.responseText;
-                        console.log("text==" + text);
-                        if(text.indexOf("fail")!==-1){
-                            console.log("fail...");
-                            passwordInputDom.value = null;
-                            let passwordTipDom = passwordInputDom.nextElementSibling;
-                            passwordTipDom.classList.remove("good");
-                            passwordTipDom.innerHTML = "账号或密码错误！";
-                            passwordTipDom.classList.add("bad");
-                        }else {
-                            console.log("success....");
-                            logInFormDom.style.display = "none";
-                            // let user_id = JSON.parse(text).user_id;
-                            let user_id = text;
-                            //显示用户
-                            logInUserConfig(username,user_id);
-                        }
-                    }
-                }
-                xhr.send(data);
-            }*/
         }
-        my.$date.getFullTime(dateInfoDom);
+        /*my.$date.getFullTime(dateInfoDom);
         let dateTimer = setInterval(function () {
             my.$date.getFullTime(dateInfoDom);
-        }, 1000);
+        }, 1000);*/
     };
     // 函数命名区间
     let my = {};
     //date相关的函数
-    my.$date = {};
+    /*my.$date = {};
     my.$date.weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
     my.$date.getFullTime = function (dom) {
         let date = new Date();
@@ -214,7 +168,7 @@
         let m = minute < 10 ? "0" + minute : minute;
         let s = second < 10 ? "0" + second : second;
         return h + ":" + m + ":" + s;
-    }
+    }*/
 
     //登录相关的函数
     my.$login = {};
