@@ -2,6 +2,8 @@
 package com.test.web;
 
 
+import com.test.exception.UserAlreadyLoginException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -26,19 +28,20 @@ public class LoginServlet extends HttpServlet {
         try {
             Cookie[] cookies = req.getCookies();
             for(Cookie cookie : cookies){
-                if(cookie.getName().equals("username")){
-                        throw new Exception();
+                if(cookie.getName().equals("username") || cookie.getName().equals("user_id")){
+                        throw new UserAlreadyLoginException();
                 }
             }
-        } catch (Exception e) {
+        } catch (UserAlreadyLoginException e) {
             e.printStackTrace();
             //already login send error page
+            req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
             return;
         }
 
         if(req.getServletPath().indexOf("login")!=-1){
             System.out.println("login...");
-            req.getRequestDispatcher("/WEB-INF/pages/user/logIn.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/pages/user/login.jsp").forward(req,resp);
         }else if(req.getServletPath().indexOf("register")!=-1){
             System.out.println("register...");
             req.getRequestDispatcher("/WEB-INF/pages/user/register.jsp").forward(req,resp);
@@ -57,7 +60,8 @@ public class LoginServlet extends HttpServlet {
             Cookie cookie2 = new Cookie("user_id", Integer.toString(user_id));
             resp.addCookie(cookie1);
             resp.addCookie(cookie2);
-            resp.sendRedirect(req.getContextPath());
+            req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
+//            resp.sendRedirect(req.getContextPath());
         }
     }
 }

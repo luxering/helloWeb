@@ -1,5 +1,6 @@
 package com.test.web;
 
+import com.test.exception.UserNotFoundException;
 import com.test.java.User;
 
 import javax.servlet.ServletException;
@@ -29,6 +30,9 @@ public class UserInfoPageServlet extends HttpServlet{
         System.out.println(req.getPathInfo());//    /1
 
         try {
+            if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
+                throw new UserNotFoundException();
+            }
             int user_id = Integer.valueOf(req.getPathInfo().split("/")[1]);
             System.out.println(user_id);
 
@@ -44,7 +48,7 @@ public class UserInfoPageServlet extends HttpServlet{
                 }
             }*/
             if(user_id != 1){
-                throw  new Exception();
+                throw  new UserNotFoundException();
             }
             User user = new User();
             user.setUser_id(user_id);
@@ -54,8 +58,9 @@ public class UserInfoPageServlet extends HttpServlet{
             req.setAttribute("user",user);
             req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
         //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
-        }catch (Exception e){
+        }catch (UserNotFoundException e){
             e.printStackTrace();
+            req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
         }
     }
 

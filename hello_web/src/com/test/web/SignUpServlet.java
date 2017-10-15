@@ -23,6 +23,7 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //validate
         //register
-        resp.sendRedirect("success.jsp");
+        req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
+//        resp.sendRedirect("success.jsp");
     }
 }
