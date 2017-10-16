@@ -29,10 +29,11 @@ public class LoginServlet extends HttpServlet {
             Cookie[] cookies = req.getCookies();
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals("username") || cookie.getName().equals("user_id")){
-                        throw new UserAlreadyLoginException();
+                        throw new UserAlreadyLoginException("用户已登录...");
                 }
             }
         } catch (UserAlreadyLoginException e) {
+            e.getMessage();
             e.printStackTrace();
             //already login send error page
             req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);

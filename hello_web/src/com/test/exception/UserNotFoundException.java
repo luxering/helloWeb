@@ -8,18 +8,23 @@ package com.test.exception;
  * To change this template use File | Settings | File Templates.
  */
 public class UserNotFoundException extends Exception {
-    private String message = "没有该用户...";
+    private final long serialVersionUID = 1L;
+
+    /*private String message = "没有该用户...";
     public UserNotFoundException() {
         System.out.println("======================");
         System.out.println(message);
         System.out.println("======================");
-    }
+    }*/
 
-    @Override
+    public UserNotFoundException(String message) {
+        super(message);
+    }
+/*@Override
     public void printStackTrace() {
 //        super.printStackTrace();
         System.out.println("======================");
         System.out.println(message);
         System.out.println("======================");
-    }
+    }*/
 }

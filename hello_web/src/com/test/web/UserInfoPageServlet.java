@@ -31,7 +31,7 @@ public class UserInfoPageServlet extends HttpServlet{
 
         try {
             if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
-                throw new UserNotFoundException();
+                throw new UserNotFoundException("没有该用户...");
             }
             int user_id = Integer.valueOf(req.getPathInfo().split("/")[1]);
             System.out.println(user_id);
@@ -48,7 +48,7 @@ public class UserInfoPageServlet extends HttpServlet{
                 }
             }*/
             if(user_id != 1){
-                throw  new UserNotFoundException();
+                throw  new UserNotFoundException("没有该用户...");
             }
             User user = new User();
             user.setUser_id(user_id);
@@ -59,6 +59,7 @@ public class UserInfoPageServlet extends HttpServlet{
             req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
         //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
         }catch (UserNotFoundException e){
+            e.getMessage();
             e.printStackTrace();
             req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
         }

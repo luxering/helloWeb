@@ -8,10 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/pages/templet/header.html"%>
 <style type="text/css">
-    .loginForm{width:300px;height:150px;background:#bbcab9 !important;position:fixed;top:50px;left:50%;margin-left:-150px;padding-top:50px;color:#0a0a0a;}
+    .loginForm{width:300px;background:#bbcab9 !important;position:fixed;top:50px;left:50%;margin-left:-150px;color:#0a0a0a;border-radius:5px;}
     input{outline:none;border:none;font-family:"微软雅黑";}
+    .l_formTop{line-height:50px;background:#ccc;}
+    .l_href{float:right;padding-right:10px;color:#656565;}
+    .l_href:hover{color:#f7f7f7;}
+    .l_title{padding-left: 25px;font-size: 20px;color: #38b95a;font-weight: 600;}
     .l_pline{height:50px;}
-    .l_pline:nth-child(3){text-align:center;}
+    .l_pline.center{text-align:center;}
     .lp_text{display:inline-block;width:80px;text-align:right;}
     .l_inputInfo{width:140px;padding:5px;}
     .l_inputTip{padding-left:80px;color:#f00;font-size:10px;display:none;}
@@ -24,6 +28,10 @@
 </style>
 <form method="post" action="${pageContext.request.contextPath}/login" class="loginForm" name="loginForm">
 <%--<div class="loginForm">--%>
+    <div class="l_formTop">
+        <a href="${pageContext.request.contextPath}/register" title="注册" class="l_href">没有帐号？点击注册</a>
+        <h3 class="l_title">登 录</h3>
+    </div>
     <p class="l_pline"><span class="lp_text">用户名：</span><input type="text" name="username" maxlength="20" class="l_username l_inputInfo">
         <span class="l_inputTip">hello</span>
     </p>
@@ -31,7 +39,7 @@
         <span class="l_inputTip">world</span>
     </p>
     <%--<p class="l_pline"><input type="button" value="提 交" class="l_submitBtn" title="提 交"></p>--%>
-    <p class="l_pline"><input type="submit" value="提 交" class="l_submitBtn" title="提 交"></p>
+    <p class="l_pline center"><input type="submit" value="提 交" class="l_submitBtn" title="提 交"></p>
 </form>
 <%--</div>--%>
 <script type="text/javascript">

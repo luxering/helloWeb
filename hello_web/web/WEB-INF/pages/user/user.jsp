@@ -9,9 +9,11 @@
 <%@include file="/WEB-INF/pages/templet/header.html" %>
 <style>
     .mider {background: #3fc;}
+    .m_top{height:100px;background:#0f0;}
     .m_wrap {margin: 0 auto;width: 500px;min-height: 300px;background: #696;}
 </style>
 <div class="mider">
+    <div class="m_top"></div>
     <div class="m_wrap">
         <div class="mr_userImg"><img src="${user.user_img_url}" width="184" height="184" alt="user_image"></div>
         <div class="mr_userInfo">
