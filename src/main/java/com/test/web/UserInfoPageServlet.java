@@ -61,7 +61,7 @@ public class UserInfoPageServlet extends HttpServlet{
         }catch (UserNotFoundException e){
             e.getMessage();
             e.printStackTrace();
-            req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/pages/userNotFound.jsp").forward(req,resp);
         }
     }
 

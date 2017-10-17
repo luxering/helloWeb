@@ -3,6 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/pages/404.jsp</location>
+    </error-page>
+    <!--<error-page>
+        <exception-type>com.test.exception.UserNotFoundException</exception-type>
+        &lt;!&ndash;<exception-type>java.lang.NumberFormatException</exception-type>&ndash;&gt;
+        <location>/WEB-INF/pages/userNotFound.jsp</location>
+    </error-page>-->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/pages/error.jsp</location>
+    </error-page>
     <!--servlet start-->
     <servlet>
         <servlet-name>loginServlet</servlet-name>
