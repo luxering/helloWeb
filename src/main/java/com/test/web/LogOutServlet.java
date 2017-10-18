@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+//import java.io.PrintWriter;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,6 +18,7 @@ import java.io.IOException;
 public class LogOutServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("logout...");
         Cookie[] cookies = req.getCookies();
         for(int i=0,len=cookies.length;i<len;i++){
             if(cookies[i].getName().equals("username")){
@@ -31,6 +33,20 @@ public class LogOutServlet extends HttpServlet{
                 resp.addCookie(cookies[i]);
             }
         }
+/*//        resp.setContentType("utf-8");
+        resp.setCharacterEncoding("utf-8");
+        PrintWriter out = resp.getWriter();
+        StringBuilder builder = new StringBuilder();
+//        builder.append("hello world<br/>");
+        builder.append("<div class='hr_btn'>\n" +
+                "                    <a href='"+ req.getContextPath() +"/login' class='hr_logInBtn' title=\'登录\'>登录</a>\n" +
+                "                </div>\n" +
+                "                <span class='hr_midSpan'>|</span>\n" +
+                "                <div class='hr_btn'>\n" +
+                "                    <a href='"+ req.getContextPath() +"/register' class='hr_signUpBtn' title=\'注册\'>注册</a>\n" +
+                "                </div>");
+        System.out.println(builder.toString());
+        out.print(builder.toString());*/
     }
 
     @Override
