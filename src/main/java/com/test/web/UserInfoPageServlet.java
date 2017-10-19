@@ -22,7 +22,7 @@ public class UserInfoPageServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println(req.getHttpServletMapping().getMatchValue());//  1
+//        System.out.println(req.getHttpServletMapping().getMatchValue());//  1
         System.out.println(req.getRequestURL());//  http://localhost:8080/helloweb/profile/1
         System.out.println(req.getRequestURI());//  /helloweb/profile/1
         System.out.println(req.getContextPath());// /helloweb

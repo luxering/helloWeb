@@ -18,7 +18,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getHttpServletMapping().getMatchValue());//  register
+//        System.out.println(req.getHttpServletMapping().getMatchValue());//  register
         System.out.println(req.getRequestURL());// http://localhost:8080/helloweb/register
         System.out.println(req.getRequestURI());//  /helloweb/register
         System.out.println(req.getContextPath());// /helloweb
@@ -52,6 +52,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("signin...");
+        req.setCharacterEncoding("utf-8");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         System.out.println("username==" + username + ",password==" + password);

@@ -9,7 +9,7 @@
     </welcome-file-list>
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/pages/404.jsp</location>
+        <location>/WEB-INF/pages/errorPages/404.jsp</location>
     </error-page>
     <!--<error-page>
         <exception-type>com.test.exception.UserNotFoundException</exception-type>
@@ -18,7 +18,7 @@
     </error-page>-->
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/WEB-INF/pages/error.jsp</location>
+        <location>/WEB-INF/pages/errorPages/error.jsp</location>
     </error-page>
     <!--servlet start-->
     <servlet>

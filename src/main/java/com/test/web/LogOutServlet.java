@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-//import java.io.PrintWriter;
+import java.io.PrintWriter;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,7 +33,8 @@ public class LogOutServlet extends HttpServlet{
                 resp.addCookie(cookies[i]);
             }
         }
-/*//        resp.setContentType("utf-8");
+        req.getSession().invalidate();
+//        resp.setContentType("utf-8");
         resp.setCharacterEncoding("utf-8");
         PrintWriter out = resp.getWriter();
         StringBuilder builder = new StringBuilder();
@@ -45,8 +46,8 @@ public class LogOutServlet extends HttpServlet{
                 "                <div class='hr_btn'>\n" +
                 "                    <a href='"+ req.getContextPath() +"/register' class='hr_signUpBtn' title=\'注册\'>注册</a>\n" +
                 "                </div>");
-        System.out.println(builder.toString());
-        out.print(builder.toString());*/
+        System.out.println(builder);
+        out.print(builder);
     }
 
     @Override

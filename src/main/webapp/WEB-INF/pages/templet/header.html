@@ -20,7 +20,7 @@
     a{text-decoration:none;}
     a:hover{text-decoration:underline;color:#ff5722;}
     ul,ol,li{list-style:none;}
-    header{height:30px;line-height:30px;background:#ccc;padding:0 50px;}
+    header{height:30px;line-height:30px;background:#ccc;padding:10px 50px;}
     .h_rightBox{float:right;font-size:12px;}
     .hr_btn{display:inline-block;}
     .hr_midSpan{padding:0 5px;}
@@ -36,12 +36,13 @@
     .hl_title:hover{color:#de1010;}
     /*.hl_dateInfo{padding-left:5px;font-size:10px;}*/
 </style>
+            <!--${cookie.user_id.value}-->
+        <c:out value="${cookie.user_id.value>0}"></c:out>
 <header class="header">
     <div class="h_rightBox">
-         <!--   ${cookie.user_id.value}
-        <c:out value="${cookie.user_id.value>0}"></c:out>
         <c:choose>
             <c:when test="${cookie.user_id.value>0}">
+                <!--if cookie.user,  session.setAttribute(user)-->
                 <a href="user/1" class="hr_userImg"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg" alt="img" width="20" height="20">
             </a><div class="hr_userInfo">
                     <p class="hr_username">username</p>
@@ -59,14 +60,14 @@
                     <a href='${pageContext.request.contextPath}/register' class='hr_signUpBtn' title="注册">注册</a>
                 </div>
             </c:otherwise>
-        </c:choose>-->
+        </c:choose>
     </div>
     <div class="h_leftBox">
         <a href="${pageContext.request.contextPath}" title="homepage"><h3 class="hl_title">HelloWeb</h3></a><!--<span class="hl_dateInfo">note:no:no 1:1:1</span>-->
     </div>
 </header>
 <script>
-    /*let my = {};
+    var my = {};
     my.$login = {};
     my.$login.exit = function () {
         alert(1);
@@ -81,8 +82,8 @@
             }
         }
         xhr.send();
-    }*/
-    ;(function () {
+    }
+    /*;(function () {
         let username = "${cookie.username.value}";
         let user_id = "${cookie.user_id.value}";
         let rightHeaderDom = document.querySelector("header .h_rightBox");
@@ -125,5 +126,5 @@
             //显示用户
             logInUserConfig(username,user_id);
         }
-    })()
+    })()*/
 </script>
