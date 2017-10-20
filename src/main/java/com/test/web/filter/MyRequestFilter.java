@@ -7,7 +7,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,7 +15,7 @@ import java.util.Date;
  * Time: 11:35
  * To change this template use File | Settings | File Templates.
  */
-public class MyRequstFilter implements Filter {
+public class MyRequestFilter implements Filter {
     private FilterConfig config;
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -26,7 +25,7 @@ public class MyRequstFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpSession httpSession = ((HttpServletRequest)servletRequest).getSession();
-            System.out.println("id==="+httpSession.getId());
+        System.out.println("id==="+httpSession.getId());
         if(httpSession.isNew()){
             System.out.println("id==="+httpSession.getId());
         }
@@ -37,7 +36,7 @@ public class MyRequstFilter implements Filter {
                 user_id = Integer.valueOf(cookies[i].getValue());
             }
         }
-//        System.out.println("user_id=="+user_id);
+        System.out.println("user_id=="+user_id);
         if(user_id>0){
             User user = new User();
 //            user.setUser_id(1);
@@ -51,6 +50,6 @@ public class MyRequstFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        config = null;
     }
 }

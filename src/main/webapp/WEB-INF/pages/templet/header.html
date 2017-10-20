@@ -43,9 +43,9 @@
         <c:choose>
             <c:when test="${cookie.user_id.value>0}">
                 <!--if cookie.user,  session.setAttribute(user)-->
-                <a href="${pageContext.request.contextPath}/profile/1" class="hr_userImg"><img src="${user.user_img_url}" alt="img" width="20" height="20">
+                <a href="${pageContext.request.contextPath}/profile/1" class="hr_userImg"><img src="${sessionScope.user.user_img_url}" alt="img" width="20" height="20">
             </a><div class="hr_userInfo">
-                    <p class="hr_username">${user.username}</p>
+                    <p class="hr_username">${sessionScope.user.username}</p>
                     <ul class="hr_ulbox">
                         <li class="hr_logout" title="退出" onclick="my.$login.exit();">退出</li>
                     </ul>

@@ -15,11 +15,11 @@
 <div class="mider">
     <div class="m_top"></div>
     <div class="m_wrap">
-        <div class="mr_userImg"><img src="${user.user_img_url}" width="184" height="184" alt="user_image"></div>
+        <div class="mr_userImg"><img src="${requestScope.user.user_img_url}" width="184" height="184" alt="user_image"></div>
         <div class="mr_userInfo">
             <ul>
-                <li>username:${user.username}</li>
-                <li class="">user id:${user.user_id}</li>
+                <li>username:${requestScope.user.username}</li>
+                <li class="">user id:${requestScope.user.user_id}</li>
                 <li class="">sign up date:<span class="user_sign_up_date">2011-11-11</span></li>
             </ul>
         </div>
