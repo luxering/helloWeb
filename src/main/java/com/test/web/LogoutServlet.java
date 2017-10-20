@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  * Time: 21:57
  * To change this template use File | Settings | File Templates.
  */
-public class LogOutServlet extends HttpServlet{
+public class LogoutServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("logout...");
@@ -46,8 +46,10 @@ public class LogOutServlet extends HttpServlet{
                 "                <div class='hr_btn'>\n" +
                 "                    <a href='"+ req.getContextPath() +"/register' class='hr_signUpBtn' title=\'注册\'>注册</a>\n" +
                 "                </div>");
-        System.out.println(builder);
+//        System.out.println(builder);
         out.print(builder);
+//        resp.sendRedirect("/WEB-INF/pages/fail.jsp");
+//        req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
     }
 
     @Override

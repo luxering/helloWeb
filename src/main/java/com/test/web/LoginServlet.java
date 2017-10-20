@@ -19,11 +19,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        System.out.println(req.getHttpServletMapping().getMatchValue());//  register
-        System.out.println(req.getRequestURL());// http://localhost:8080/helloweb/register
+        /*System.out.println(req.getRequestURL());// http://localhost:8080/helloweb/register
         System.out.println(req.getRequestURI());//  /helloweb/register
         System.out.println(req.getContextPath());// /helloweb
         System.out.println(req.getServletPath());// /register
-        System.out.println(req.getPathInfo());//    null
+        System.out.println(req.getPathInfo());//    null*/
 
         try {
             Cookie[] cookies = req.getCookies();

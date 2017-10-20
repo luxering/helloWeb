@@ -43,11 +43,11 @@
         <c:choose>
             <c:when test="${cookie.user_id.value>0}">
                 <!--if cookie.user,  session.setAttribute(user)-->
-                <a href="user/1" class="hr_userImg"><img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5c/5ce363a572151e8d34b30851f8f8eecc12fabe6d_full.jpg" alt="img" width="20" height="20">
+                <a href="${pageContext.request.contextPath}/profile/1" class="hr_userImg"><img src="${user.user_img_url}" alt="img" width="20" height="20">
             </a><div class="hr_userInfo">
-                    <p class="hr_username">username</p>
+                    <p class="hr_username">${user.username}</p>
                     <ul class="hr_ulbox">
-                        <li class="hr_logOut" title="退出" onclick="my.$login.exit();">退出</li>
+                        <li class="hr_logout" title="退出" onclick="my.$login.exit();">退出</li>
                     </ul>
                 </div>
             </c:when>
@@ -70,15 +70,16 @@
     var my = {};
     my.$login = {};
     my.$login.exit = function () {
-        alert(1);
+        // alert(1);
         let xhr = new XMLHttpRequest();
-        xhr.open("post","${pageContext.request.contextPath}/logOut",true);
+        xhr.open("post","${pageContext.request.contextPath}/logout",true);
         xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
         xhr.onreadystatechange = function () {
             if(this.readyState === 4 && this.status === 200){
                 let data = this.responseText;
                 console.log(data);
                 document.querySelector("header .h_rightBox").innerHTML = data;
+                window.location.reload();
             }
         }
         xhr.send();

@@ -47,11 +47,11 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>logoutServlet</servlet-name>
-        <servlet-class>com.test.web.LogOutServlet</servlet-class>
+        <servlet-class>com.test.web.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>logoutServlet</servlet-name>
-        <url-pattern>/logOut</url-pattern>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>userInfoPage</servlet-name>
@@ -95,4 +95,13 @@
     <listener>
         <listener-class>com.test.web.listener.MyServletContextListener</listener-class>
     </listener>
+    <!--filter start-->
+    <filter>
+        <filter-name>requestFilter</filter-name>
+        <filter-class>com.test.web.filter.MyRequstFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>requestFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 </web-app>
