@@ -23,6 +23,14 @@ public class MyHttpServletResponseWrapper extends HttpServletResponseWrapper {
     }
 
     public GZIPOutputStream getGzipOutputStream(){
+        if(gzipServletOutputStream==null){
+            /*try {
+                this.getWriter();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+            throw new IllegalStateException("gzipSerletOutputStream is null");
+        }
         return this.gzipServletOutputStream.gzipOutputStream;
     }
 

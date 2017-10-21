@@ -9,6 +9,7 @@
 <p>
     <span class="infoText">3</span><span>秒后返回主页...</span>
 </p>
+<div class="stopgo">clickme</div>
 <script>
     {
         let infoTextDom = document.querySelector(".infoText");
@@ -22,5 +23,8 @@
                 window.location.href = "${pageContext.request.contextPath}";
             }
         },1000);
+        document.querySelector(".stopgo").onclick = function () {
+            clearInterval(countdownTimer);
+        }
     }
 </script>

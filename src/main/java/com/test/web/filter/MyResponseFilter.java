@@ -33,9 +33,11 @@ public class MyResponseFilter implements Filter {
             MyHttpServletResponseWrapper myHttpServletResponseWrapper = new MyHttpServletResponseWrapper(httpServletResponse);
             httpServletResponse.addHeader("Content-Encoding","gzip");
             System.out.println("before header=====");
+            System.out.println("path=="+httpServletRequest.getRequestURL());
             filterChain.doFilter(httpServletRequest,myHttpServletResponseWrapper);
             System.out.println("after header=====");
-            myHttpServletResponseWrapper.flushBuffer();
+            System.out.println("path=="+httpServletRequest.getRequestURL());
+//            myHttpServletResponseWrapper.flushBuffer();
 
             myHttpServletResponseWrapper.close();
 

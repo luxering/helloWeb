@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
         try {
             Cookie[] cookies = req.getCookies();
             for(Cookie cookie : cookies){
-                if(cookie.getName().equals("username") || cookie.getName().equals("user_id")){
+                if(/*cookie.getName().equals("username") || */cookie.getName().equals("user_id")){
                         throw new UserAlreadyLoginException("用户已登录...");
                 }
             }
@@ -60,6 +60,7 @@ public class LoginServlet extends HttpServlet {
             int user_id = 1;
             Cookie cookie1 = new Cookie("username", username);
             Cookie cookie2 = new Cookie("user_id", Integer.toString(user_id));
+            cookie2.setMaxAge(60*60*5);
             resp.addCookie(cookie1);
             resp.addCookie(cookie2);
             req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);

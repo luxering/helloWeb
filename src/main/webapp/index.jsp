@@ -29,7 +29,7 @@
     footer{height:100px;background:#7f3;}
 </style>
 <footer>
-            <c:out value="${cookie.user_id.value}"/>
+            <c:out value="${cookie.user_id.value/0}"/>
     <div class="f_left">
         <p>this is the end</p>
     </div>
