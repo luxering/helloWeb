@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/pages/templet/header.html"%>
     <div class="main">
-        <p>Login Success!</p>
+        <p><%--Login--%>${requestScope.msg} Success!</p>
         <%@include file="/WEB-INF/pages/templet/goBackToIndex.html"%>
         <%--<p>
             <span class="infoText">3</span><span>秒后返回主页...</span>
