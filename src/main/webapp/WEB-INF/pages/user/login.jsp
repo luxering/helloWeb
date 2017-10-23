@@ -51,7 +51,7 @@
         my.$login.clearLoginTipClass = function (dom) {
             let classList = dom.nextElementSibling.classList;
             classList.remove("bad");
-            classList.remove("good");
+            // classList.remove("good");
         }
         usernameInputDom.onmousedown = passwordInputDom.onmousedown = function () {
             my.$login.clearLoginTipClass(this);
@@ -85,7 +85,7 @@
             tipDom.innerHTML = (name === "username" ? "用户名" : "密码") + "长度不得小于6个字符！";
             return false;
         } else {
-            tipDom.classList.add("good");
+            // tipDom.classList.add("good");
             tipDom.innerHTML = "";
             return true;
         }

@@ -67,16 +67,19 @@
         my.$login.clearLoginTipClass = function (dom) {
             let classList = dom.nextElementSibling.classList;
             classList.remove("bad");
-            classList.remove("good");
+            // classList.remove("good");
         }
-        usernameInputDom.onmousedown = passwordInputDom.onmousedown = function () {
+        usernameInputDom.onmousedown = passwordInputDom.onmousedown = passwordInputDom1.onmousedown = function () {
             my.$login.clearLoginTipClass(this);
         }
         usernameInputDom.onblur = passwordInputDom.onblur = function () {
             my.$login.validate(this);
         }
+        passwordInputDom1.onblur = function () {
+            my.$login.validate(this,passwordInputDom.value)
+        }
         loginSubmitBtnDom.onclick = function () {
-            return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom);
+            return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom) && my.$login.validate(passwordInputDom1);
         }
     };
     // 函数命名区间
@@ -87,7 +90,7 @@
     /**
      * 账号，密码验证是否为空。或是少于6 位字符。
      * */
-    my.$login.validate = function (dom) {
+    my.$login.validate = function (dom,password) {
         console.log(dom.name);
         let value = dom.value;
         let name = dom.name;
@@ -101,9 +104,23 @@
             tipDom.innerHTML = (name === "username" ? "用户名" : "密码") + "长度不得小于6个字符！";
             return false;
         } else {
-            tipDom.classList.add("good");
+            if(password){
+                console.log("passworld=="+password);
+                console.log("value==="+value);
+                if(value === password){
+                    tipDom.innerHTML = "";
+                    return true;
+                }else{
+                    tipDom.classList.add("bad");
+                    tipDom.innerHTML = "两次密码不匹配，请重新输入...";
+                    dom.value = "";
+                    return false;
+                }
+            }else {
+            // tipDom.classList.add("good");
             tipDom.innerHTML = "";
             return true;
+            }
         }
         return false;
     }

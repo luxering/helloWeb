@@ -73,7 +73,9 @@ public class LoginServlet extends HttpServlet {
         }else if(req.getServletPath().indexOf("register")!=-1){
             System.out.println("register");
             String username = req.getParameter("username");
-            String password = req.getParameter("username");
+            String password = req.getParameter("password");
+            String password1 = req.getParameter("password_1");
+            if(password.equals(password1)){
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
@@ -81,6 +83,7 @@ public class LoginServlet extends HttpServlet {
             System.out.println("signUp_date==="+user.getSign_up_date());
             req.setAttribute("msg","Register");
             req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
+            }
         }
     }
 }
