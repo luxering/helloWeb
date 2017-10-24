@@ -8,7 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/pages/templet/header.html"%>
     <div class="info">
-        <p>Logout Success!</p>
+        <p>Login failure!</p>
     </div>
+<%@include file="/WEB-INF/pages/templet/goBackToIndex.html"%>
 </body>
 </html>

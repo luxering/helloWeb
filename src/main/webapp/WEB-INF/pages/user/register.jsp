@@ -69,17 +69,35 @@
             classList.remove("bad");
             // classList.remove("good");
         }
-        usernameInputDom.onmousedown = passwordInputDom.onmousedown = passwordInputDom1.onmousedown = function () {
-            my.$login.clearLoginTipClass(this);
+        usernameInputDom.onfocus = passwordInputDom.onfocus = passwordInputDom1.onfocus = function () {
+            if(!my.$login.flag){
+                my.$login.clearLoginTipClass(this);
+            }
         }
         usernameInputDom.onblur = passwordInputDom.onblur = function () {
+            my.$login.flag = false;
             my.$login.validate(this);
         }
         passwordInputDom1.onblur = function () {
+            my.$login.flag = false;
             my.$login.validate(this,passwordInputDom.value)
         }
         loginSubmitBtnDom.onclick = function () {
-            return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom) && my.$login.validate(passwordInputDom1);
+            my.$login.flag = true;
+            if(!my.$login.validate(usernameInputDom)){
+                usernameInputDom.focus();
+                return false;
+            }
+            if(!my.$login.validate(passwordInputDom)){
+                passwordInputDom.focus();
+                return false;
+            }
+            if(!my.$login.validate(passwordInputDom1,passwordInputDom.value)){
+                passwordInputDom1.focus();
+                return false;
+            }
+            return true;
+            // return my.$login.validate(usernameInputDom) && my.$login.validate(passwordInputDom) && my.$login.validate(passwordInputDom1,passwordInputDom.value);
         }
     };
     // 函数命名区间
@@ -87,6 +105,7 @@
 
     //登录相关的函数
     my.$login = my.$login || {};
+    my.$login.flag = false;
     /**
      * 账号，密码验证是否为空。或是少于6 位字符。
      * */
@@ -96,10 +115,12 @@
         let name = dom.name;
         let tipDom = dom.nextElementSibling;
         if (!value) {
+            // dom.focus();
             tipDom.classList.add("bad");
             tipDom.innerHTML = "请输入" + (name === "username" ? "用户名！" : "密码！");
             return false;
         } else if (value.length < 6) {
+            // dom.focus();
             tipDom.classList.add("bad");
             tipDom.innerHTML = (name === "username" ? "用户名" : "密码") + "长度不得小于6个字符！";
             return false;
@@ -111,6 +132,7 @@
                     tipDom.innerHTML = "";
                     return true;
                 }else{
+                    // dom.focus();
                     tipDom.classList.add("bad");
                     tipDom.innerHTML = "两次密码不匹配，请重新输入...";
                     dom.value = "";
@@ -122,7 +144,7 @@
             return true;
             }
         }
-        return false;
+        // return false;
     }
 </script>
 </body>

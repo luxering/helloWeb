@@ -69,6 +69,8 @@ public class LoginServlet extends HttpServlet {
                 req.setAttribute("msg","Login");
                 req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
 //            resp.sendRedirect(req.getContextPath());
+            }else {
+                req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
             }
         }else if(req.getServletPath().indexOf("register")!=-1){
             System.out.println("register");
@@ -76,13 +78,13 @@ public class LoginServlet extends HttpServlet {
             String password = req.getParameter("password");
             String password1 = req.getParameter("password_1");
             if(password.equals(password1)){
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setSign_up_date(new Date().getTime());
-            System.out.println("signUp_date==="+user.getSign_up_date());
-            req.setAttribute("msg","Register");
-            req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setSign_up_date(new Date().getTime());
+                System.out.println("signUp_date==="+user.getSign_up_date());
+                req.setAttribute("msg","Register");
+                req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
             }
         }
     }
