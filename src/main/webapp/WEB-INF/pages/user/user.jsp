@@ -15,11 +15,11 @@
 <div class="mider">
     <div class="m_top"></div>
     <div class="m_wrap">
-        <div class="mr_userImg"><img src="${requestScope.user.user_img_url}" width="184" height="184" alt="user_image"></div>
+        <div class="mr_userImg"><img src="${requestScope.user.user_avatar_url}" width="184" height="184" alt="user_image"></div>
         <div class="mr_userInfo">
             <ul>
-                <li>username:${requestScope.user.username}</li>
                 <li class="">user id:${requestScope.user.user_id}</li>
+                <li>username:${requestScope.user.username}</li>
                 <li class="">sign up date:<span class="user_sign_up_date">2011-11-11</span></li>
             </ul>
         </div>
@@ -36,7 +36,7 @@
                     return beautifulTime(hour) + ":" + beautifulTime(minute) + ":" + beautifulTime(second);
                 }
             ;(function () {
-                let date = new Date(${user.register_time});
+                let date = new Date(${user.register_date});
                 console.log(date);
                 document.querySelector(".mider .user_sign_up_date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " , " + changeTimeFormat(date);
             })()

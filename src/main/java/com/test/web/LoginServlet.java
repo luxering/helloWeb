@@ -64,7 +64,31 @@ public class LoginServlet extends HttpServlet {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
             System.out.println("username==" + username + ",password==" + password);
-            if (username.equals("myhello") && password.equals("myworld")) {
+            try {
+                Connection connection = JDBCConnectionUtil.getConnection();
+                Statement statement = connection.createStatement();
+                String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE username = '"+username +"'AND password = '"+password+"'";
+                ResultSet resultSet = statement.executeQuery(sql);
+                if(resultSet.next()){
+                    int user_id = resultSet.getInt("id");
+                    String url = resultSet.getString("user_avatar_url");
+                    Cookie cookie = new Cookie("user_id",Integer.toString(user_id));
+                    Cookie cookie1 = new Cookie("username",username);
+                    resp.addCookie(cookie);
+                    resp.addCookie(cookie1);
+                    User user = new User(user_id);
+                    user.setUsername(username);
+                    user.setUser_avatar_url(url);
+                    req.getSession().setAttribute("user",user);
+                    req.setAttribute("msg","Login");
+                    req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
+                }else {
+                    req.getRequestDispatcher("WEB-INF/pages/fail.jsp").forward(req,resp);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            /*if (username.equals("myhello") && password.equals("myworld")) {
                 int user_id = 1;
                 Cookie cookie1 = new Cookie("username", username);
                 Cookie cookie2 = new Cookie("user_id", Integer.toString(user_id));
@@ -76,7 +100,7 @@ public class LoginServlet extends HttpServlet {
 //            resp.sendRedirect(req.getContextPath());
             }else {
                 req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
-            }
+            }*/
         }else if(req.getServletPath().indexOf("register")!=-1){
             System.out.println("register");
             String username = req.getParameter("username");
@@ -86,18 +110,28 @@ public class LoginServlet extends HttpServlet {
                 /*User user = new User();
                 user.setUsername(username);
                 user.setPassword(password);
-                user.setRegister_time(new Date());*/
+                user.setRegister_date(new Date());*/
                 try (Connection connection = JDBCConnectionUtil.getConnection()) {
+                    connection.setAutoCommit(false);
                     Statement statement = connection.createStatement();
-                    Date date = new Date();
+                    /*Date date = new Date();
+                    java.sql.Date d = new java.sql.Date(date.getTime());
                     System.out.println("date=="+date);
-                    String sql = "INSERT INTO user(username,password,register_time) VALUES("+username+","+password+","+date+")";
+                    System.out.println("d==="+d);*/
+                    String sql = "INSERT INTO user(username,password) VALUES('"+username+"','"+password+"');";
                     System.out.println("sql==="+sql);
-                    ResultSet resultSet = statement.executeQuery(sql);
+                    int rows = statement.executeUpdate(sql);
+                    if(rows==0){
+                        connection.rollback();
+                    }else {
+                        connection.commit();
+                    }
+                    statement.close();
+                    connection.close();
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
-//                System.out.println("signUp_date==="+user.getRegister_time());
+//                System.out.println("signUp_date==="+user.getRegister_date());
                 req.setAttribute("msg","Register");
                 req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
             }

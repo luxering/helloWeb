@@ -14,7 +14,7 @@ public class User {
     private String username;
     private String password;
     private String user_avatar_url;
-    private Date register_time;
+    private Date register_date;
 
     public User() {
     }
@@ -64,11 +64,11 @@ public class User {
     }
 
 
-    public Date getRegister_time() {
-        return register_time;
+    public Date getRegister_date() {
+        return register_date;
     }
 
-    public void setRegister_time(Date register_time) {
-        this.register_time = register_time;
+    public void setRegister_date(Date register_date) {
+        this.register_date = register_date;
     }
 }

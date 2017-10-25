@@ -36,7 +36,7 @@ public class MyRequestFilter implements Filter {
             System.out.println("id==="+httpSession.getId());
         }
         Cookie[] cookies = ((HttpServletRequest)servletRequest).getCookies();
-        System.out.println("cookies=="+ Arrays.toString(cookies));
+        System.out.println("cookies.length=="+ cookies.length);
         int user_id = 0;
         for (int i=0,len=cookies.length;i<len;i++){
             if(cookies[i].getName().indexOf("user_id")!=-1){
@@ -51,19 +51,24 @@ public class MyRequestFilter implements Filter {
         if(user_id>0){
             try (Connection connection = JDBCConnectionUtil.getConnection()) {
                 Statement statement = connection.createStatement();
-                String sql = "SELECT user_id,username,password FROM user WHERE user_id =" + user_id;
+                String sql = "SELECT id,username,password,user_avatar_url FROM user WHERE id =" + user_id;
                 System.out.println("sql=="+sql);
                 ResultSet resultSet = statement.executeQuery(sql);
                 if(resultSet.next()){
-                    User user = new User();
+                    User user = new User(user_id);
         //            user.setUser_id(1);
                     user.setUsername(resultSet.getString("username"));
-                    user.setUser_avatar_url(resultSet.getString("user_avatar_url"));
-        //            user.setRegister_time(new Date().getTime()-1000000);
+                    StringBuffer stringBuffer = new StringBuffer(servletRequest.getServletContext().getContextPath());
+                    stringBuffer.append("/");
+                    stringBuffer.append(resultSet.getString("user_avatar_url"));
+                    user.setUser_avatar_url(stringBuffer.toString());
+//                    user.setUser_avatar_url(resultSet.getString("user_avatar_url"));
+        //            user.setRegister_date(new Date().getTime()-1000000);
                     ((HttpServletRequest) servletRequest).getSession().setAttribute("user",user);
                 }
                 resultSet.close();
                 statement.close();
+                connection.close();
             }catch (SQLException e){
                 e.printStackTrace();
             }

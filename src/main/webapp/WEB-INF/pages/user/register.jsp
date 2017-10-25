@@ -58,6 +58,7 @@
     <%--<p class="l_pline"><input type="button" value="提 交" class="l_submitBtn" title="提 交"></p>--%>
     <p class="l_pline center"><input type="submit" value="提 交" class="l_submitBtn" title="提 交"></p>
 </form>
+<img src="${pageContext.request.contextPath}/images/avatar/default.jpg" width="184" height="184" alt="avatar">
 <script>
     window.onload = function () {
 
@@ -81,7 +82,7 @@
             if(my.$login.validate($this)){
                 let username = $this.value;
                 let xhr = new XMLHttpRequest();
-                xhr.open("post","checkUsername",true);
+                xhr.open("post","${pageContext.request.contextPath}/checkUsername",true);
                 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
                 xhr.onreadystatechange = function () {
                     if(this.readyState === 4 && this.status === 200){

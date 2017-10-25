@@ -38,7 +38,7 @@ public class RegisterServlet extends HttpServlet {
         PrintWriter printWriter = resp.getWriter();
         try (Connection connection = JDBCConnectionUtil.getConnection()) {
             Statement statement = connection.createStatement();
-            String sql = "SELECT user_id,username FROM user WHERE username = '" + username +"'";
+            String sql = "SELECT id,username FROM user WHERE username = '" + username +"'";
             ResultSet resultSet = statement.executeQuery(sql);
             System.out.println("resultset.rows===="+resultSet.getRow());
             if(resultSet.next()){

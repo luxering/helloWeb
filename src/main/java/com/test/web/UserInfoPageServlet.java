@@ -53,7 +53,7 @@ public class UserInfoPageServlet extends HttpServlet{
             User user = new User();
             user.setUser_id(user_id);
             user.setUsername("myhello");
-            user.setRegister_time(new Date());
+            user.setRegister_date(new Date());
             user.setUser_avatar_url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5f/5f786f156545ed8ec0772ce809d5b90f0dd7a9e2_full.jpg");
             req.setAttribute("user",user);
             req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
