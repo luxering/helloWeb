@@ -19,7 +19,8 @@
     .lp_text{display:inline-block;width:80px;text-align:right;}
     .l_inputInfo{width:140px;padding:5px;}
     .l_inputTip{padding-left:80px;color:#f00;font-size:10px;display:none;}
-    .l_inputTip.bad{color:#f00;display:block;}
+    .l_inputTip.bad,.l_inputTip.good{display:block;}
+    .l_inputTip.bad{color:#f00;}
     .l_inputTip.good{color:#0f0;}
     .l_submitBtn{width:100px;height:30px;background:#f1f1f1;color:#333;cursor:pointer;}
     .l_submitBtn:hover{background:#669e66;color:#fff;}
@@ -67,14 +68,39 @@
         my.$login.clearLoginTipClass = function (dom) {
             let classList = dom.nextElementSibling.classList;
             classList.remove("bad");
-            // classList.remove("good");
+            classList.remove("good");
         }
         usernameInputDom.onfocus = passwordInputDom.onfocus = passwordInputDom1.onfocus = function () {
             if(!my.$login.flag){
                 my.$login.clearLoginTipClass(this);
             }
         }
-        usernameInputDom.onblur = passwordInputDom.onblur = function () {
+        usernameInputDom.onblur = function () {
+            let $this = this;
+            my.$login.flag = false;
+            if(my.$login.validate($this)){
+                let username = $this.value;
+                let xhr = new XMLHttpRequest();
+                xhr.open("post","checkUsername",true);
+                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if(this.readyState === 4 && this.status === 200){
+                        let str = this.responseText;
+                        console.log("username is avaliable?==="+this.responseText);
+                        let sibling = $this.nextElementSibling;
+                        if(str.indexOf("ok")!=-1){
+                            sibling.classList.add("good");
+                            sibling.innerHTML = "该账号可以使用";
+                        }else{
+                            sibling.classList.add("bad");
+                            sibling.innerHTML = "该账号已被注册";
+                        }
+                    }
+                }
+                xhr.send("username="+username);
+            }
+        }
+        passwordInputDom.onblur = function () {
             my.$login.flag = false;
             my.$login.validate(this);
         }

@@ -3,6 +3,7 @@ package com.test.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,15 +16,22 @@ import java.util.Properties;
  * Time: 14:23
  * To change this template use File | Settings | File Templates.
  */
-public class JdbcConnection {
+public class JDBCConnectionUtil {
 
     public static Connection getConnection() throws SQLException {
         Connection connection = null;
         /*String url = "jdbc:mysql://localhost:3306/classicmodels";
         String username = "root";
         String password = "root";*/
-//            Class.forName("com.mysql.jdbc.Driver");
-        try (FileInputStream fileInputStream = new FileInputStream("/WEB-INF/db.properties")){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+//        try (InputStream fileInputStream = JDBCConnectionUtil.class.getResourceAsStream("/WEB-INF/db.properties")){
+//        buffer.append("WEB-INF/db.properties");
+//        System.out.println("buffer=="+buffer);
+        try(FileInputStream fileInputStream = new FileInputStream("F:\\IdeaProjects\\helloweb\\src\\main\\webapp\\WEB-INF\\db.properties")){
 
 //            FileInputStream fileInputStream = new FileInputStream("F:\\IdeaProjects\\hello_web\\hello_web\\web\\WEB-INF\\db.properties");
             Properties properties = new Properties();
@@ -42,7 +50,7 @@ public class JdbcConnection {
     public static void main(String args[]){
         Connection connection = null;
         try {
-            connection = getConnection();
+            connection = JDBCConnectionUtil.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -36,7 +36,7 @@
                     return beautifulTime(hour) + ":" + beautifulTime(minute) + ":" + beautifulTime(second);
                 }
             ;(function () {
-                let date = new Date(${user.sign_up_date});
+                let date = new Date(${user.register_time});
                 console.log(date);
                 document.querySelector(".mider .user_sign_up_date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " , " + changeTimeFormat(date);
             })()

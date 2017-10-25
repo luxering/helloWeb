@@ -4,10 +4,15 @@ package com.test.web;
 
 import com.test.exception.UserAlreadyLoginException;
 import com.test.java.User;
+import com.test.util.JDBCConnectionUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 /**
@@ -78,11 +83,21 @@ public class LoginServlet extends HttpServlet {
             String password = req.getParameter("password");
             String password1 = req.getParameter("password_1");
             if(password.equals(password1)){
-                User user = new User();
+                /*User user = new User();
                 user.setUsername(username);
                 user.setPassword(password);
-                user.setSign_up_date(new Date().getTime());
-                System.out.println("signUp_date==="+user.getSign_up_date());
+                user.setRegister_time(new Date());*/
+                try (Connection connection = JDBCConnectionUtil.getConnection()) {
+                    Statement statement = connection.createStatement();
+                    Date date = new Date();
+                    System.out.println("date=="+date);
+                    String sql = "INSERT INTO user(username,password,register_time) VALUES("+username+","+password+","+date+")";
+                    System.out.println("sql==="+sql);
+                    ResultSet resultSet = statement.executeQuery(sql);
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+//                System.out.println("signUp_date==="+user.getRegister_time());
                 req.setAttribute("msg","Register");
                 req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
             }

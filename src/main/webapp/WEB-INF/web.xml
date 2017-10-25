@@ -37,14 +37,14 @@
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-    <!--<servlet>
-        <servlet-name>signUpServlet</servlet-name>
-        <servlet-class>com.test.web.SignUpServlet</servlet-class>
+    <servlet>
+        <servlet-name>registerServlet</servlet-name>
+        <servlet-class>com.test.web.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>signUpServlet</servlet-name>
-        <url-pattern>/signUp</url-pattern>
-    </servlet-mapping>-->
+        <servlet-name>registerServlet</servlet-name>
+        <url-pattern>/checkUsername</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>logoutServlet</servlet-name>
         <servlet-class>com.test.web.LogoutServlet</servlet-class>

@@ -1,5 +1,7 @@
 package com.test.java;
 
+import java.util.Date;
+
 /**
  * Created by IntelliJ IDEA.
  * User: luxer
@@ -8,13 +10,17 @@ package com.test.java;
  * To change this template use File | Settings | File Templates.
  */
 public class User {
+    private int user_id;
     private String username;
     private String password;
-    private String user_img_url;
-    private int user_id;
-    private long sign_up_date;
+    private String user_avatar_url;
+    private Date register_time;
 
     public User() {
+    }
+
+    public User(int user_id) {
+        this.user_id = user_id;
     }
 
     public User(String username) {
@@ -24,6 +30,13 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -42,27 +55,20 @@ public class User {
         this.password = password;
     }
 
-    public String getUser_img_url() {
-        return user_img_url;
+    public String getUser_avatar_url() {
+        return user_avatar_url;
     }
 
-    public void setUser_img_url(String user_img_url) {
-        this.user_img_url = user_img_url;
+    public void setUser_avatar_url(String user_avatar_url) {
+        this.user_avatar_url = user_avatar_url;
     }
 
-    public int getUser_id() {
-        return user_id;
+
+    public Date getRegister_time() {
+        return register_time;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public long getSign_up_date() {
-        return sign_up_date;
-    }
-
-    public void setSign_up_date(long sign_up_date) {
-        this.sign_up_date = sign_up_date;
+    public void setRegister_time(Date register_time) {
+        this.register_time = register_time;
     }
 }
