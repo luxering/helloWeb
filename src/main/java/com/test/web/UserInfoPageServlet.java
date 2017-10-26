@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,8 +40,40 @@ public class UserInfoPageServlet extends HttpServlet{
             if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
                 throw new UserNotFoundException("没有该用户...");
             }
-            int user_id = Integer.valueOf(req.getPathInfo().substring(1));
-            System.out.println("user_id=="+user_id);
+            /*StringBuffer buffer = new StringBuffer(req.getPathInfo());
+            String substring = buffer.substring(1);
+            System.out.println("sb=="+substring);
+            if(substring.indexOf("/")!=-1){
+                System.out.println("out");
+                substring = substring.substring(0,substring.indexOf("/"));
+            }
+            int user_id = Integer.valueOf(substring.toString());
+            System.out.println("user_id=="+user_id);*/
+//            String pathInfo = req.getPathInfo();
+            //match "/user_id" && "/user_id/"
+            String regex = "^/(\\d+)/?$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(req.getPathInfo());
+            System.out.println("matcher=="+matcher);
+            /*if(matcher.find()) {
+                for (int i = 0, len = matcher.groupCount(); i < len; i++) {
+                    System.out.println(i + ":" + matcher.group(i));
+                }
+            }*/
+            /*while(matcher.find()) {
+                System.out.println(">>>>" + matcher.group(1));
+            }*/
+            int user_id = 0;
+            if(matcher.find()){
+                user_id = Integer.valueOf(matcher.group(1));
+            }else {
+//                resp.sendRedirect();
+            }
+            /*if(pathInfo.matches("^/\\d+/?$")){
+                System.out.println("ok url..."+pathInfo);
+            }else{
+                System.out.println("bad url...."+pathInfo);
+            }*/
 
 
             //mysql
