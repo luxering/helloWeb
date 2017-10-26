@@ -64,29 +64,47 @@ public class LoginServlet extends HttpServlet {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
             System.out.println("username==" + username + ",password==" + password);
+            Connection connection = null;
+            Statement statement = null;
+            ResultSet resultSet = null;
             try {
-                Connection connection = JDBCConnectionUtil.getConnection();
-                Statement statement = connection.createStatement();
+                connection = JDBCConnectionUtil.getConnection();
+                statement = connection.createStatement();
                 String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE username = '"+username +"'AND password = '"+password+"'";
-                ResultSet resultSet = statement.executeQuery(sql);
+                resultSet = statement.executeQuery(sql);
                 if(resultSet.next()){
                     int user_id = resultSet.getInt("id");
-                    String url = resultSet.getString("user_avatar_url");
                     Cookie cookie = new Cookie("user_id",Integer.toString(user_id));
                     Cookie cookie1 = new Cookie("username",username);
                     resp.addCookie(cookie);
                     resp.addCookie(cookie1);
+                    /*String url = resultSet.getString("user_avatar_url");
                     User user = new User(user_id);
                     user.setUsername(username);
                     user.setUser_avatar_url(url);
-                    req.getSession().setAttribute("user",user);
+                    req.getSession().setAttribute("user",user);*/
                     req.setAttribute("msg","Login");
                     req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
                 }else {
+                    req.setAttribute("msg","Login Failure!");
                     req.getRequestDispatcher("WEB-INF/pages/fail.jsp").forward(req,resp);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            }finally {
+                try {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    }
+                    if(statement != null) {
+                        statement.close();
+                    }
+                    if(connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             /*if (username.equals("myhello") && password.equals("myworld")) {
                 int user_id = 1;
@@ -134,6 +152,8 @@ public class LoginServlet extends HttpServlet {
 //                System.out.println("signUp_date==="+user.getRegister_date());
                 req.setAttribute("msg","Register");
                 req.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(req,resp);
+            }else{
+
             }
         }
     }

@@ -30,12 +30,13 @@ public class MyRequestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpSession httpSession = ((HttpServletRequest)servletRequest).getSession();
+        /*HttpSession httpSession = ((HttpServletRequest)servletRequest).getSession();
         System.out.println("id==="+httpSession.getId());
         if(httpSession.isNew()){
             System.out.println("id==="+httpSession.getId());
-        }
-        Cookie[] cookies = ((HttpServletRequest)servletRequest).getCookies();
+        }*/
+        HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
+        Cookie[] cookies = httpServletRequest.getCookies();
         System.out.println("cookies.length=="+ cookies.length);
         int user_id = 0;
         for (int i=0,len=cookies.length;i<len;i++){
@@ -58,13 +59,13 @@ public class MyRequestFilter implements Filter {
                     User user = new User(user_id);
         //            user.setUser_id(1);
                     user.setUsername(resultSet.getString("username"));
-                    StringBuffer stringBuffer = new StringBuffer(servletRequest.getServletContext().getContextPath());
+                    StringBuffer stringBuffer = new StringBuffer(httpServletRequest.getContextPath());
                     stringBuffer.append("/");
                     stringBuffer.append(resultSet.getString("user_avatar_url"));
                     user.setUser_avatar_url(stringBuffer.toString());
 //                    user.setUser_avatar_url(resultSet.getString("user_avatar_url"));
         //            user.setRegister_date(new Date().getTime()-1000000);
-                    ((HttpServletRequest) servletRequest).getSession().setAttribute("user",user);
+                    httpServletRequest.getSession().setAttribute("user",user);
                 }
                 resultSet.close();
                 statement.close();

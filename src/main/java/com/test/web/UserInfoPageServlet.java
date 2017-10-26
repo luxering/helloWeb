@@ -2,6 +2,7 @@ package com.test.web;
 
 import com.test.exception.UserNotFoundException;
 import com.test.java.User;
+import com.test.util.JDBCConnectionUtil;
 
 import javax.servlet.ServletException;
 //import javax.servlet.http.Cookie;
@@ -9,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 /**
@@ -33,8 +38,8 @@ public class UserInfoPageServlet extends HttpServlet{
             if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
                 throw new UserNotFoundException("没有该用户...");
             }
-            int user_id = Integer.valueOf(req.getPathInfo().split("/")[1]);
-            System.out.println(user_id);
+            int user_id = Integer.valueOf(req.getPathInfo().substring(1));
+            System.out.println("user_id=="+user_id);
 
 
             //mysql
@@ -47,22 +52,56 @@ public class UserInfoPageServlet extends HttpServlet{
                     username = cookies[i].getValue();
                 }
             }*/
-            if(user_id != 1){
+            /*if(user_id != 1){
                 throw  new UserNotFoundException("没有该用户...");
+            }*/
+            Connection connection = null;
+            Statement statement = null;
+            ResultSet resultSet = null;
+            try {
+                connection = JDBCConnectionUtil.getConnection();
+                statement = connection.createStatement();
+                String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE id =" + user_id;
+                System.out.println("sql==="+sql);
+                resultSet = statement.executeQuery(sql);
+                if(resultSet.next()){
+                    User user = new User(user_id);
+//                    user.setUser_id(user_id);
+                    user.setUsername(resultSet.getString("username"));
+                    StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+                    stringBuffer.append("/");
+                    stringBuffer.append(resultSet.getString("user_avatar_url"));
+                    user.setUser_avatar_url(stringBuffer.toString());
+                    user.setRegister_date(resultSet.getTimestamp("register_date"));
+                    req.setAttribute("user",user);
+                    req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
+                //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
+                }else {
+                    throw new UserNotFoundException("没有该用户...");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    }
+                    if (statement != null) {
+                        statement.close();
+                    }
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-            User user = new User();
-            user.setUser_id(user_id);
-            user.setUsername("myhello");
-            user.setRegister_date(new Date());
-            user.setUser_avatar_url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5f/5f786f156545ed8ec0772ce809d5b90f0dd7a9e2_full.jpg");
-            req.setAttribute("user",user);
-            req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
-        //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
         }catch (UserNotFoundException e){
             e.getMessage();
             e.printStackTrace();
             System.out.println("user no found,but i lived");
-            req.getRequestDispatcher("/WEB-INF/pages/userNotFound.jsp").forward(req,resp);
+            req.setAttribute("msg","user not found!");
+            req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
         }
     }
 

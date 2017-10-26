@@ -25,6 +25,7 @@
     .hr_btn{display:inline-block;}
     .hr_midSpan{padding:0 5px;}
     .hr_userImg,.hr_userInfo{display:inline-block;}
+    .hr_userImg{width:30px;height:30px;}
     .hr_userInfo{position:relative;}
     .hr_userInfo:hover .hr_ulbox{display:block;}
     .hr_username{/*min-width:50px;*/}
@@ -43,7 +44,7 @@
         <c:choose>
             <c:when test="${cookie.user_id.value>0}">
                 <!--if cookie.user,  session.setAttribute(user)-->
-                <a href="${pageContext.request.contextPath}/profile/1" class="hr_userImg"><img src="${sessionScope.user.user_avatar_url}" alt="img" width="20" height="20">
+                <a href="${pageContext.request.contextPath}/profile/1" class="hr_userImg"><img src="${sessionScope.user.user_avatar_url}" alt="img" width="30" height="30">
             </a><div class="hr_userInfo">
                     <p class="hr_username">${sessionScope.user.username}</p>
                     <ul class="hr_ulbox">
