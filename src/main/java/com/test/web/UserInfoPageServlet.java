@@ -37,7 +37,11 @@ public class UserInfoPageServlet extends HttpServlet{
         System.out.println(req.getPathInfo());//    /1
 
         try {
-            if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
+            /*if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
+                throw new UserNotFoundException("没有该用户...");
+            }*/
+            String pathInfo = req.getPathInfo();
+            if( pathInfo == null){
                 throw new UserNotFoundException("没有该用户...");
             }
             /*StringBuffer buffer = new StringBuffer(req.getPathInfo());
@@ -51,10 +55,10 @@ public class UserInfoPageServlet extends HttpServlet{
             System.out.println("user_id=="+user_id);*/
 //            String pathInfo = req.getPathInfo();
             //match "/user_id" && "/user_id/"
-            String regex = "^/(\\d+)/?$";
+            String regex = "^/(\\d+)/?";
             Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(req.getPathInfo());
-            System.out.println("matcher=="+matcher);
+            Matcher matcher = pattern.matcher(pathInfo);
+//            System.out.println("matcher=="+matcher);
             /*if(matcher.find()) {
                 for (int i = 0, len = matcher.groupCount(); i < len; i++) {
                     System.out.println(i + ":" + matcher.group(i));
@@ -66,8 +70,24 @@ public class UserInfoPageServlet extends HttpServlet{
             int user_id = 0;
             if(matcher.find()){
                 user_id = Integer.valueOf(matcher.group(1));
+                System.out.println("user_id=="+user_id);
             }else {
 //                resp.sendRedirect();
+                throw new UserNotFoundException("没有该用户...");
+            }
+            if(pathInfo.matches("^/\\d+/\\w+$")){
+                System.out.println("bad urlllll.....");
+//                resp.sendRedirect("http://localhost:8080/helloweb/profile/1");
+//                resp.sendRedirect("//www.baidu.com");
+                StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+                stringBuffer.append(req.getServletPath());
+                stringBuffer.append("/");
+                stringBuffer.append(user_id);
+                System.out.println("sb=="+stringBuffer);
+                resp.sendRedirect(stringBuffer.toString());
+//                resp.sendRedirect(req.getContextPath()+"/profile/"+user_id);
+//                req.getRequestDispatcher("/profile/1").forward(req,resp);
+                return;
             }
             /*if(pathInfo.matches("^/\\d+/?$")){
                 System.out.println("ok url..."+pathInfo);
