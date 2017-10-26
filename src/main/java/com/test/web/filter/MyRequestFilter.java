@@ -37,14 +37,17 @@ public class MyRequestFilter implements Filter {
         }*/
         HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
         Cookie[] cookies = httpServletRequest.getCookies();
-        System.out.println("cookies.length=="+ cookies.length);
         int user_id = 0;
-        for (int i=0,len=cookies.length;i<len;i++){
-            if(cookies[i].getName().indexOf("user_id")!=-1){
-                try {
-                    user_id = Integer.valueOf(cookies[i].getValue());
-                }catch (NumberFormatException e){
-                    e.printStackTrace();
+        // fist time no 'user_id' cookie cause 500 error
+        if(cookies != null){
+            System.out.println("cookies.length=="+ cookies.length);
+            for (int i=0,len=cookies.length;i<len;i++){
+                if(cookies[i].getName().indexOf("user_id")!=-1){
+                    try {
+                        user_id = Integer.valueOf(cookies[i].getValue());
+                    }catch (NumberFormatException e){
+                        e.printStackTrace();
+                    }
                 }
             }
         }

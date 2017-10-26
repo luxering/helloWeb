@@ -19,7 +19,7 @@
     <div class="m_top"></div>
     <div class="m_wrap">
         <c:if test="${requestScope.user.user_id==sessionScope.user.user_id}">
-            <a href="${pageContext.request.servletPath}/edit" class="">编辑资料</a>
+            <a href="${requestScope.url}/edit" class="">编辑资料</a>
         </c:if>
         <div class="mr_userImg"><img src="${requestScope.user.user_avatar_url}" width="184" height="184" alt="user_image"></div>
         <div class="mr_userInfo">

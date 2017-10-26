@@ -65,6 +65,10 @@
         <servlet-name>userInfoPage</servlet-name>
         <url-pattern>/profile/*/</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userInfoPage</servlet-name>
+        <url-pattern>/profile/*/edit</url-pattern>
+    </servlet-mapping>
     <!--servlet end-->
     <!--servletContext init params start-->
     <context-param>

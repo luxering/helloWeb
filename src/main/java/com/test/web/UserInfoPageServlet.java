@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -36,14 +37,45 @@ public class UserInfoPageServlet extends HttpServlet{
         System.out.println(req.getServletPath());// /profile
         System.out.println(req.getPathInfo());//    /1
 
-        try {
+        String pathInfo = req.getPathInfo();
+        System.out.println("pathfo==="+pathInfo);
+        String regex = "^/(\\d+)/edit$";
+        if (pathInfo.matches(regex)) {
+            HttpSession httpSession = req.getSession();
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(pathInfo);
+            int user_id = 0;
+            if(matcher.find()){
+                user_id = Integer.valueOf(matcher.group(1));
+            }
+            User user = (User) httpSession.getAttribute("user");
+            //not login
+            StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+            if(user == null){
+//                stringBuffer.append(req.getServletPath());
+//              StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+                stringBuffer.append("/login");
+                resp.sendRedirect(stringBuffer.toString());
+            //login & self
+            }else if(user.getUser_id() == user_id){
+                req.getRequestDispatcher("/WEB-INF/pages/user/editUserProfile.jsp").forward(req,resp);
+            //login & not self
+            }else{
+                stringBuffer.append(req.getServletPath());
+                stringBuffer.append("/");
+                stringBuffer.append(user.getUser_id());
+                stringBuffer.append("/edit");
+                resp.sendRedirect(stringBuffer.toString());
+            }
+            return;
+        }else {
+            try {
             /*if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
                 throw new UserNotFoundException("没有该用户...");
             }*/
-            String pathInfo = req.getPathInfo();
-            if( pathInfo == null){
-                throw new UserNotFoundException("没有该用户...");
-            }
+                if( pathInfo == null){
+                    throw new UserNotFoundException("没有该用户...");
+                }
             /*StringBuffer buffer = new StringBuffer(req.getPathInfo());
             String substring = buffer.substring(1);
             System.out.println("sb=="+substring);
@@ -54,10 +86,10 @@ public class UserInfoPageServlet extends HttpServlet{
             int user_id = Integer.valueOf(substring.toString());
             System.out.println("user_id=="+user_id);*/
 //            String pathInfo = req.getPathInfo();
-            //match "/user_id" && "/user_id/"
-            String regex = "^/(\\d+)/?";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(pathInfo);
+                //match "/user_id" && "/user_id/"
+                String reg = "^/(\\d+)/?";
+                Pattern pattern = Pattern.compile(reg);
+                Matcher matcher = pattern.matcher(pathInfo);
 //            System.out.println("matcher=="+matcher);
             /*if(matcher.find()) {
                 for (int i = 0, len = matcher.groupCount(); i < len; i++) {
@@ -67,28 +99,28 @@ public class UserInfoPageServlet extends HttpServlet{
             /*while(matcher.find()) {
                 System.out.println(">>>>" + matcher.group(1));
             }*/
-            int user_id = 0;
-            if(matcher.find()){
-                user_id = Integer.valueOf(matcher.group(1));
-                System.out.println("user_id=="+user_id);
-            }else {
+                int user_id = 0;
+                if(matcher.find()){
+                    user_id = Integer.valueOf(matcher.group(1));
+                    System.out.println("user_id=="+user_id);
+                }else {
 //                resp.sendRedirect();
-                throw new UserNotFoundException("没有该用户...");
-            }
-            if(pathInfo.matches("^/\\d+/\\w+$")){
-                System.out.println("bad urlllll.....");
+                    throw new UserNotFoundException("没有该用户...");
+                }
+                if(pathInfo.matches("^/\\d+/\\w+$")){
+                    System.out.println("bad urlllll.....");
 //                resp.sendRedirect("http://localhost:8080/helloweb/profile/1");
 //                resp.sendRedirect("//www.baidu.com");
-                StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-                stringBuffer.append(req.getServletPath());
-                stringBuffer.append("/");
-                stringBuffer.append(user_id);
-                System.out.println("sb=="+stringBuffer);
-                resp.sendRedirect(stringBuffer.toString());
+                    StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+                    stringBuffer.append(req.getServletPath());
+                    stringBuffer.append("/");
+                    stringBuffer.append(user_id);
+                    System.out.println("sb=="+stringBuffer);
+                    resp.sendRedirect(stringBuffer.toString());
 //                resp.sendRedirect(req.getContextPath()+"/profile/"+user_id);
 //                req.getRequestDispatcher("/profile/1").forward(req,resp);
-                return;
-            }
+                    return;
+                }
             /*if(pathInfo.matches("^/\\d+/?$")){
                 System.out.println("ok url..."+pathInfo);
             }else{
@@ -96,9 +128,9 @@ public class UserInfoPageServlet extends HttpServlet{
             }*/
 
 
-            //mysql
+                //mysql
 
-            //test
+                //test
             /*String username = "";
             Cookie cookies[] = req.getCookies();
             for(int i=0,len=cookies.length;i<len;i++){
@@ -109,53 +141,55 @@ public class UserInfoPageServlet extends HttpServlet{
             /*if(user_id != 1){
                 throw  new UserNotFoundException("没有该用户...");
             }*/
-            Connection connection = null;
-            Statement statement = null;
-            ResultSet resultSet = null;
-            try {
-                connection = JDBCConnectionUtil.getConnection();
-                statement = connection.createStatement();
-                String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE id =" + user_id;
-                System.out.println("sql==="+sql);
-                resultSet = statement.executeQuery(sql);
-                if(resultSet.next()){
-                    User user = new User(user_id);
-//                    user.setUser_id(user_id);
-                    user.setUsername(resultSet.getString("username"));
-                    StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-                    stringBuffer.append("/");
-                    stringBuffer.append(resultSet.getString("user_avatar_url"));
-                    user.setUser_avatar_url(stringBuffer.toString());
-                    user.setRegister_date(resultSet.getTimestamp("register_date"));
-                    req.setAttribute("user",user);
-                    req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
-                //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
-                }else {
-                    throw new UserNotFoundException("没有该用户...");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally {
+                Connection connection = null;
+                Statement statement = null;
+                ResultSet resultSet = null;
                 try {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    if (connection != null) {
-                        connection.close();
+                    connection = JDBCConnectionUtil.getConnection();
+                    statement = connection.createStatement();
+                    String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE id =" + user_id;
+                    System.out.println("sql==="+sql);
+                    resultSet = statement.executeQuery(sql);
+                    if(resultSet.next()){
+                        User user = new User(user_id);
+//                    user.setUser_id(user_id);
+                        user.setUsername(resultSet.getString("username"));
+                        StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+                        stringBuffer.append("/");
+                        stringBuffer.append(resultSet.getString("user_avatar_url"));
+                        user.setUser_avatar_url(stringBuffer.toString());
+                        user.setRegister_date(resultSet.getTimestamp("register_date"));
+                        req.setAttribute("user",user);
+                        req.setAttribute("url",req.getRequestURI());
+                        req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
+                        //        req.getRequestDispatcher("/fail.jsp").forward(req,resp);
+                    }else {
+                        throw new UserNotFoundException("没有该用户...");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
+                }finally {
+                    try {
+                        if (resultSet != null) {
+                            resultSet.close();
+                        }
+                        if (statement != null) {
+                            statement.close();
+                        }
+                        if (connection != null) {
+                            connection.close();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
+            }catch (UserNotFoundException e){
+                e.getMessage();
+                e.printStackTrace();
+                System.out.println("user no found,but i lived");
+                req.setAttribute("msg","user not found!");
+                req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
             }
-        }catch (UserNotFoundException e){
-            e.getMessage();
-            e.printStackTrace();
-            System.out.println("user no found,but i lived");
-            req.setAttribute("msg","user not found!");
-            req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
         }
     }
 
