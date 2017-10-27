@@ -39,8 +39,9 @@ public class UserInfoPageServlet extends HttpServlet{
 
         String pathInfo = req.getPathInfo();
         System.out.println("pathfo==="+pathInfo);
-        String regex = "^/(\\d+)/edit$";
-        if (pathInfo.matches(regex)) {
+        String regex = "^/([1-9]\\d*)/edit$";
+        //edit profile url
+        if (pathInfo != null && pathInfo.matches(regex)) {
             HttpSession httpSession = req.getSession();
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(pathInfo);
@@ -49,8 +50,8 @@ public class UserInfoPageServlet extends HttpServlet{
                 user_id = Integer.valueOf(matcher.group(1));
             }
             User user = (User) httpSession.getAttribute("user");
-            //not login
             StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+            //not login
             if(user == null){
 //                stringBuffer.append(req.getServletPath());
 //              StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
@@ -67,7 +68,8 @@ public class UserInfoPageServlet extends HttpServlet{
                 stringBuffer.append("/edit");
                 resp.sendRedirect(stringBuffer.toString());
             }
-            return;
+//            return;
+            //good or bad url go to profile
         }else {
             try {
             /*if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
@@ -86,11 +88,19 @@ public class UserInfoPageServlet extends HttpServlet{
             int user_id = Integer.valueOf(substring.toString());
             System.out.println("user_id=="+user_id);*/
 //            String pathInfo = req.getPathInfo();
-                //match "/user_id" && "/user_id/"
-                String reg = "^/(\\d+)/?";
+                //  /0 bad. /1a bad.
+                /*if(pathInfo.matches("^/0\\w*") || pathInfo.matches("^/[1-9]\\d*\\w+")){
+                    System.out.println("pathinfo=="+pathInfo+",is bad url");
+                    throw new UserNotFoundException("没有该用户...");
+                }*/
+                //match "/user_id" && "/user_id/*"
+                String reg = "^/([1-9]\\d*)(/\\w*)*$";
+                if(!pathInfo.matches(reg)){
+                    System.out.println("pathinfo=="+pathInfo+",is bad url");
+                    throw new UserNotFoundException("没有该用户...");
+                }
                 Pattern pattern = Pattern.compile(reg);
                 Matcher matcher = pattern.matcher(pathInfo);
-//            System.out.println("matcher=="+matcher);
             /*if(matcher.find()) {
                 for (int i = 0, len = matcher.groupCount(); i < len; i++) {
                     System.out.println(i + ":" + matcher.group(i));
@@ -103,22 +113,19 @@ public class UserInfoPageServlet extends HttpServlet{
                 if(matcher.find()){
                     user_id = Integer.valueOf(matcher.group(1));
                     System.out.println("user_id=="+user_id);
-                }else {
+                }/*else {
 //                resp.sendRedirect();
                     throw new UserNotFoundException("没有该用户...");
-                }
-                if(pathInfo.matches("^/\\d+/\\w+$")){
+                }*/
+                // /usr_id/* bad url go to /user_id
+                if(pathInfo.matches("^/[1-9]\\d*(/\\w+)+$")){
                     System.out.println("bad urlllll.....");
-//                resp.sendRedirect("http://localhost:8080/helloweb/profile/1");
-//                resp.sendRedirect("//www.baidu.com");
                     StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
                     stringBuffer.append(req.getServletPath());
                     stringBuffer.append("/");
                     stringBuffer.append(user_id);
                     System.out.println("sb=="+stringBuffer);
                     resp.sendRedirect(stringBuffer.toString());
-//                resp.sendRedirect(req.getContextPath()+"/profile/"+user_id);
-//                req.getRequestDispatcher("/profile/1").forward(req,resp);
                     return;
                 }
             /*if(pathInfo.matches("^/\\d+/?$")){
@@ -127,20 +134,6 @@ public class UserInfoPageServlet extends HttpServlet{
                 System.out.println("bad url...."+pathInfo);
             }*/
 
-
-                //mysql
-
-                //test
-            /*String username = "";
-            Cookie cookies[] = req.getCookies();
-            for(int i=0,len=cookies.length;i<len;i++){
-                if(cookies[i].getName().indexOf("username")!=-1){
-                    username = cookies[i].getValue();
-                }
-            }*/
-            /*if(user_id != 1){
-                throw  new UserNotFoundException("没有该用户...");
-            }*/
                 Connection connection = null;
                 Statement statement = null;
                 ResultSet resultSet = null;
@@ -189,7 +182,19 @@ public class UserInfoPageServlet extends HttpServlet{
                 System.out.println("user no found,but i lived");
                 req.setAttribute("msg","user not found!");
                 req.getRequestDispatcher("/WEB-INF/pages/fail.jsp").forward(req,resp);
+//                return;
             }
+                //test
+            /*String username = "";
+            Cookie cookies[] = req.getCookies();
+            for(int i=0,len=cookies.length;i<len;i++){
+                if(cookies[i].getName().indexOf("username")!=-1){
+                    username = cookies[i].getValue();
+                }
+            }*/
+            /*if(user_id != 1){
+                throw  new UserNotFoundException("没有该用户...");
+            }*/
         }
     }
 

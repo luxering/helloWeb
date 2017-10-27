@@ -53,10 +53,11 @@ public class MyRequestFilter implements Filter {
         }
         System.out.println("user_id=="+user_id);
         if(user_id>0){
-            try (Connection connection = JDBCConnectionUtil.getConnection()) {
+            try {
+                Connection connection = JDBCConnectionUtil.getConnection();
                 Statement statement = connection.createStatement();
                 String sql = "SELECT id,username,password,user_avatar_url FROM user WHERE id =" + user_id;
-                System.out.println("sql=="+sql);
+//                System.out.println("sql=="+sql);
                 ResultSet resultSet = statement.executeQuery(sql);
                 if(resultSet.next()){
                     User user = new User(user_id);
