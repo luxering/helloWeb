@@ -59,6 +59,9 @@ public class UserInfoPageServlet extends HttpServlet{
                 resp.sendRedirect(stringBuffer.toString());
             //login & self
             }else if(user.getUser_id() == user_id){
+                String uri = req.getRequestURI();
+                uri = uri.substring(0,uri.lastIndexOf("/"));
+                req.setAttribute("url",uri);
                 req.getRequestDispatcher("/WEB-INF/pages/user/editUserProfile.jsp").forward(req,resp);
             //login & not self
             }else{

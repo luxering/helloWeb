@@ -17,6 +17,10 @@ public class UserNotFoundException extends Exception {
         System.out.println("======================");
     }*/
 
+    public UserNotFoundException() {
+        super();
+    }
+
     public UserNotFoundException(String message) {
         super(message);
     }

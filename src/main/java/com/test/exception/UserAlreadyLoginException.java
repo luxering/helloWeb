@@ -17,6 +17,10 @@ public class UserAlreadyLoginException extends Exception {
         System.out.println("======================");
     }*/
 
+    public UserAlreadyLoginException() {
+        super();
+    }
+
     public UserAlreadyLoginException(String message) {
         super(message);
     }

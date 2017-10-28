@@ -18,7 +18,7 @@
     *{margin:0;padding:0;}
     body{font-size:14px;font-family:"微软雅黑";background:#e6f7e8;}
     a{text-decoration:none;}
-    a:hover{text-decoration:underline;color:#ff5722;}
+    a:hover{/*text-decoration:underline;*/color:#ff5722;}
     ul,ol,li{list-style:none;}
     header{height:30px;line-height:30px;background:#ccc;padding:10px 50px;}
     .h_rightBox{float:right;font-size:12px;}
@@ -44,7 +44,7 @@
         <c:choose>
             <c:when test="${cookie.user_id.value>0}">
                 <!--if cookie.user,  session.setAttribute(user)-->
-                <a href="${pageContext.request.contextPath}/profile/1" class="hr_userImg"><img src="${sessionScope.user.user_avatar_url}" alt="img" width="30" height="30">
+                <a href="${pageContext.request.contextPath}/profile/${cookie.user_id.value}" class="hr_userImg"><img src="${sessionScope.user.user_avatar_url}" alt="img" width="30" height="30">
             </a><div class="hr_userInfo">
                     <p class="hr_username">${sessionScope.user.username}</p>
                     <ul class="hr_ulbox">
