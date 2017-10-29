@@ -17,6 +17,8 @@
     .mw_editBtn:hover{/*text-decoration:none;*/background:#194200;color:#fff;}
     /*.mw_editBtn span:hover{color:#632;}*/
     .mr_userImg{}
+    .mr_userInfo ul li{margin-bottom:10px;}
+    .mr_u_userDetail{padding:5px;font-size:16px;color:#345;}
 </style>
         <c:set var="User" scope="page" value="${requestScope.user}"></c:set>
 <div class="mider">
@@ -28,9 +30,9 @@
         <div class="mr_userImg"><img src="${User.user_avatar_url}" width="184" height="184" alt="user_image"></div>
         <div class="mr_userInfo">
             <ul>
-                <li class="">user id:${User.user_id}</li>
-                <li>username:${User.username}</li>
-                <li class="">sign up date:<span class="user_sign_up_date">${User.register_date}</span></li>
+                <li class="">user id:<span class="mr_u_userDetail">${User.user_id}</span></li>
+                <li>username:<span class="mr_u_userDetail">${User.username}</span></li>
+                <li class="">sign up date:<span class="mr_u_userDetail user_sign_up_date">${User.register_date}</span></li>
             </ul>
         </div>
     </div>

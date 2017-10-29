@@ -12,12 +12,14 @@
 
     .mw_top{margin-bottom:40px;}
     .mw_top h3{margin-bottom:20px;font-size:18px;}
-    .mw_t_uploadAvatar{background:#1c997a;cursor:pointer;display:inline-block;padding:0 5px;}
+    .mw_t_uploadAvatar{background:#1c997a;cursor:pointer;display:inline-block;padding:0 5px;margin-left:10px;}
+    .mw_t_uploadAvatar:hover{background:#0f0;}
     .mw_bottom{text-align:right;}
     .mw_b_btn{display:inline-block;padding:5px 10px;background:#de1010;color:#fff;margin-left:20px;}
     .mw_b_btn.cancle{background:#322944;}
     .mw_b_btn.cancle:hover{background:#66538c;}
-    .mw_b_btn.save{background:#0f0;}
+    .mw_b_btn.save{background:#03c203;}
+    .mw_b_btn.save:hover{background:#0f0;}
 </style>
 <div class="main">
     <div class="m_wrap">
