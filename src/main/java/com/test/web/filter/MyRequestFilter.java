@@ -8,10 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 
 /**
@@ -55,10 +52,14 @@ public class MyRequestFilter implements Filter {
         if(user_id>0){
             try {
                 Connection connection = JDBCConnectionUtil.getConnection();
-                Statement statement = connection.createStatement();
+                /*Statement statement = connection.createStatement();
                 String sql = "SELECT id,username,password,user_avatar_url FROM user WHERE id =" + user_id;
-//                System.out.println("sql=="+sql);
-                ResultSet resultSet = statement.executeQuery(sql);
+                ResultSet resultSet = statement.executeQuery(sql);*/
+                String sql = "SELECT id,username,password,user_avatar_url FROM user WHERE id = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1,user_id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                System.out.println("sql=="+sql);
                 if(resultSet.next()){
                     User user = new User(user_id);
         //            user.setUser_id(1);
@@ -72,7 +73,8 @@ public class MyRequestFilter implements Filter {
                     httpServletRequest.getSession().setAttribute("user",user);
                 }
                 resultSet.close();
-                statement.close();
+//                statement.close();
+                preparedStatement.close();
                 connection.close();
             }catch (SQLException e){
                 e.printStackTrace();

@@ -9,10 +9,7 @@ import com.test.util.JDBCConnectionUtil;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Date;
 
 /**
@@ -65,13 +62,21 @@ public class LoginServlet extends HttpServlet {
             String password = req.getParameter("password");
             System.out.println("username==" + username + ",password==" + password);
             Connection connection = null;
-            Statement statement = null;
+//            Statement statement = null;
+            PreparedStatement preparedStatement = null;
             ResultSet resultSet = null;
             try {
                 connection = JDBCConnectionUtil.getConnection();
-                statement = connection.createStatement();
-                String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE username = '"+username +"'AND password = '"+password+"'";
-                resultSet = statement.executeQuery(sql);
+                /*statement = connection.createStatement();
+                String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE username = '"+username +"' AND password = '"+password+"'";
+                resultSet = statement.executeQuery(sql);*/
+                String sql = "SELECT id,username,password,user_avatar_url,register_date FROM user WHERE username = ? AND password = ?";
+                System.out.println("sql==="+sql);
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1,username);
+                preparedStatement.setString(2,password);
+                resultSet = preparedStatement.executeQuery();
+                System.out.println("sql==="+sql);
                 if(resultSet.next()){
                     int user_id = resultSet.getInt("id");
                     Cookie cookie = new Cookie("user_id",Integer.toString(user_id));
@@ -96,8 +101,11 @@ public class LoginServlet extends HttpServlet {
                     if (resultSet != null) {
                         resultSet.close();
                     }
-                    if(statement != null) {
+                    /*if(statement != null) {
                         statement.close();
+                    }*/
+                    if(preparedStatement != null) {
+                        preparedStatement.close();
                     }
                     if(connection != null) {
                         connection.close();
