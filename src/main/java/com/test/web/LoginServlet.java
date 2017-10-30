@@ -137,24 +137,37 @@ public class LoginServlet extends HttpServlet {
                 user.setUsername(username);
                 user.setPassword(password);
                 user.setRegister_date(new Date());*/
-                try (Connection connection = JDBCConnectionUtil.getConnection()) {
+                Connection connection = null;
+                try {
+                    connection = JDBCConnectionUtil.getConnection();
                     connection.setAutoCommit(false);
-                    Statement statement = connection.createStatement();
-                    /*Date date = new Date();
+                    /*Statement statement = connection.createStatement();
+                    *//*Date date = new Date();
                     java.sql.Date d = new java.sql.Date(date.getTime());
                     System.out.println("date=="+date);
-                    System.out.println("d==="+d);*/
+                    System.out.println("d==="+d);*//*
                     String sql = "INSERT INTO user(username,password) VALUES('"+username+"','"+password+"');";
                     System.out.println("sql==="+sql);
-                    int rows = statement.executeUpdate(sql);
+                    int rows = statement.executeUpdate(sql);*/
+                    String sql = "INSERT INTO user(username,password) VALUES(?,?)";
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1,username);
+                    preparedStatement.setString(2,password);
+                    int rows = preparedStatement.executeUpdate();
                     if(rows==0){
                         connection.rollback();
                     }else {
                         connection.commit();
                     }
-                    statement.close();
+//                    statement.close();
+                    preparedStatement.close();
                     connection.close();
                 }catch (SQLException e){
+                    try {
+                        connection.rollback();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                     e.printStackTrace();
                 }
 //                System.out.println("signUp_date==="+user.getRegister_date());

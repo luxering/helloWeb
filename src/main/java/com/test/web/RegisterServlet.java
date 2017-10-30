@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,9 +34,13 @@ public class RegisterServlet extends HttpServlet {
         System.out.println("username=="+username);
         PrintWriter printWriter = resp.getWriter();
         try (Connection connection = JDBCConnectionUtil.getConnection()) {
-            Statement statement = connection.createStatement();
+            /*Statement statement = connection.createStatement();
             String sql = "SELECT id,username FROM user WHERE username = '" + username +"'";
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery(sql);*/
+            String sql = "SELECT id,username FROM user WHERE username = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,username);
+            ResultSet resultSet = preparedStatement.executeQuery();
             System.out.println("resultset.rows===="+resultSet.getRow());
             if(resultSet.next()){
                 printWriter.print("not available");
@@ -47,7 +48,8 @@ public class RegisterServlet extends HttpServlet {
                 printWriter.print("ok");
             }
             resultSet.close();
-            statement.close();
+//            statement.close();
+            preparedStatement.close();
             printWriter.flush();
         }catch (SQLException e){
             e.printStackTrace();
