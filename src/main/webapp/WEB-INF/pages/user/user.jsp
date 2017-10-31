@@ -37,6 +37,10 @@
         </div>
     </div>
     <script>
+        /*function test(val) {
+            console.log("val=="+typeof (val));
+        }
+        test(${User.register_date});*/
         /*{
             let beautifulTime = function (time) {
                 return time < 10 ? "0" + time : time;

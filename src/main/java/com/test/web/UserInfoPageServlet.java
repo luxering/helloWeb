@@ -2,6 +2,7 @@ package com.test.web;
 
 import com.test.exception.UserNotFoundException;
 import com.test.java.User;
+import com.test.util.FormatTimestampUtil;
 import com.test.util.JDBCConnectionUtil;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -154,7 +157,10 @@ public class UserInfoPageServlet extends HttpServlet{
                         stringBuffer.append("/");
                         stringBuffer.append(resultSet.getString("user_avatar_url"));
                         user.setUser_avatar_url(stringBuffer.toString());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                        user.setRegister_date(FormatTimestampUtil.formatTimestamp(resultSet.getTimestamp("register_date")));
                         user.setRegister_date(resultSet.getTimestamp("register_date"));
+
                         req.setAttribute("user",user);
                         req.setAttribute("url",req.getRequestURI());
                         req.getRequestDispatcher("/WEB-INF/pages/user/user.jsp").forward(req,resp);
